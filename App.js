@@ -5,6 +5,7 @@ import SplashScreen from './Pages/SplashScreen/SplashScreen'
 import GettingStartedScreen from './Pages/GettingStarted/GettingStartedScreen';
 import Logo from './Components/Logo/Logo';
 import OtpScreen from './Pages/OtpScreen/OtpScreen';
+import PreQrScreen from './Pages/PreQrScreen/PreQrScreen';
 
 
 
@@ -14,7 +15,8 @@ export default function App() {
     <View style={styles.container}>
     {/* <SplashScreen/> */}
     {/* <GettingStartedScreen/> */}
-    <OtpScreen/>
+    {/* <OtpScreen/> */}
+    <PreQrScreen/>
     </View>
   );
 }
