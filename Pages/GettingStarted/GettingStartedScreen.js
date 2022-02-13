@@ -1,5 +1,5 @@
 import  React,{useState,useEffect} from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View,KeyboardAvoidingView } from "react-native";
+import {  Modal, StyleSheet, Text, Pressable, View, } from "react-native";
 import { Button, TextInput } from 'react-native-paper';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Logo from '../../Components/Logo/Logo';
