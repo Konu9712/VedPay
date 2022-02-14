@@ -7,6 +7,7 @@ import Logo from './Components/Logo/Logo';
 import OtpScreen from './Pages/OtpScreen/OtpScreen';
 import PreQrScreen from './Pages/PreQrScreen/PreQrScreen';
 import QRScanner from './Pages/QRScanner/QRScanner';
+import CardCollectionScreen from './Pages/CardCollectionScreen/CardCollectionScreen';
 
 
 
@@ -18,7 +19,8 @@ export default function App() {
     {/* <GettingStartedScreen/> */}
     {/* <OtpScreen/> */}
     {/* <PreQrScreen/> */}
-    <QRScanner/>
+    {/* <QRScanner/> */}
+    <CardCollectionScreen/>
     </View>
   );
 }
