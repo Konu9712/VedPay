@@ -69,7 +69,7 @@ const OtpScreen = () => {
       </View>
 
       <View style={styles.resend_container}> 
-          <Text>If you didn't receive a code !</Text>
+          <Text style={styles.resend_desc}>If you didn't receive a code !</Text>
           <Text style={styles.resend_text}>  Resend</Text>
       </View>
       
@@ -99,9 +99,11 @@ text_container:{
 desc_1:{
   fontWeight:"bold",
   fontSize: hp('3%'),
+  color:'#ffff'
 },
 desc_2:{
   fontSize: hp('3%'),
+  color:'#ffff'
 },
 root: {padding: 20, minHeight: 140},
   codeFieldRoot: {
@@ -121,7 +123,7 @@ root: {padding: 20, minHeight: 140},
     
   },
   cellText: {
-    color: 'green',
+    color: '#fff',
     fontSize: 36,
     textAlign: 'center',
   },
@@ -133,6 +135,9 @@ root: {padding: 20, minHeight: 140},
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
+  },
+  resend_desc:{
+    color:'#fff'
   },
   resend_text:{
     color:'green'

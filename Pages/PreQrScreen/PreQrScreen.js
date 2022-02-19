@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
       width:wp('100%'),
       height:hp('100%'),
-    backgroundColor:'#dbe9f4'
   },
   welcome_text_container:{
     justifyContent:'center',
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
   desc_2:{
     fontWeight:"bold",
     fontSize: hp('3%'),
+    color:'#ffff'
   },
   qr_btn:{
       marginTop:hp('2%')

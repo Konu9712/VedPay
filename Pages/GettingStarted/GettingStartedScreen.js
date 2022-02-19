@@ -101,9 +101,11 @@ const styles = StyleSheet.create({
   desc_1:{
       fontWeight:"bold",
       fontSize: hp('3%'),
+      color:'#ffff'
   },
   desc_2:{
     fontSize: hp('3%'),
+    color:'#ffff'
 },
 
 
@@ -114,7 +116,7 @@ centeredView: {
     marginTop: 22
   },
   modalView: {
-      width:wp("100%"),
+      width:wp("95%"),
       height:hp("70%"),
       marginTop:hp("30%"),
       padding:"8%",
