@@ -18,11 +18,11 @@ export default function SplashScreen() {
     </View>
 
     <View style={styles.btn_wrapper}>
-    <Button mode="contained" style={styles.btn_getStarted} onPress={() => console.log('Pressed')} color='green'>
+    <Button mode="contained" style={styles.btn_getStarted} color='green' onPress={() => console.log('Pressed')} >
     Get Started
     </Button>   
 
-    <Button mode="outlined" style={styles.btn_lonIn} onPress={() => console.log('Pressed')}  color='green'>
+    <Button mode="outlined" style={styles.btn_lonIn} color='green' onPress={() => console.log('Pressed')} dark={0}>
     LogIn
     </Button>   
     </View>
@@ -46,19 +46,22 @@ const styles = StyleSheet.create({
   },
   text_wrapper:{
     marginTop:hp('15'),
-    marginLeft:wp('20')
+    marginLeft:wp('20'),
   },
   text_header:{
     fontSize: hp('2.5%'),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color:'white'
   },
   desc_1:{
     fontSize:hp('2.4%'),
-    marginTop:wp("1%")
+    marginTop:wp("1%"),
+    color:'white'
   },
   desc_2:{
     fontSize:hp("2.4%"),
-    marginLeft:wp("10%")
+    marginLeft:wp("10%"),
+    color:'white'
   },
   btn_wrapper:{
     marginTop:hp("25%"),
@@ -68,7 +71,8 @@ const styles = StyleSheet.create({
   btn_getStarted:{
   },
   btn_lonIn:{
-    marginTop:hp('2%')
+    marginTop:hp('2%'),
+    borderColor:'green',
   }
 
   
