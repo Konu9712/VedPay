@@ -8,7 +8,8 @@ import OtpScreen from './Pages/OtpScreen/OtpScreen';
 import PreQrScreen from './Pages/PreQrScreen/PreQrScreen';
 import QRScanner from './Pages/QRScanner/QRScanner';
 import CardCollectionScreen from './Pages/CardCollectionScreen/CardCollectionScreen';
-import NewCarCollection from './Pages/NewCarCollection/NewCarCollection';
+import AddCardScreen from './Pages/AddCardScreen/AddCardScreen';
+import Modal from './Components/Logo/Modal';
 
 
 
@@ -22,8 +23,9 @@ export default function App() {
     {/* <OtpScreen/> */}
     {/* <PreQrScreen/> */}
     {/* <QRScanner/> */}
-    <CardCollectionScreen/>
-    {/* <NewCarCollection/> */}
+    {/* <CardCollectionScreen/> */}
+    <AddCardScreen/>
+    {/* <Modal/> */}
     </ImageBackground>
   );
 }

@@ -75,7 +75,7 @@ useEffect(() => {
                 </View>
             </Card>
 
-            
+
             
               </View>
           
