@@ -10,6 +10,7 @@ import QRScanner from './Pages/QRScanner/QRScanner';
 import CardCollectionScreen from './Pages/CardCollectionScreen/CardCollectionScreen';
 import AddCardScreen from './Pages/AddCardScreen/AddCardScreen';
 import Modal from './Components/Logo/Modal';
+import CardTransactionListScreen from './Pages/CardTransactionListScreen/CardTransactionListScreen';
 
 
 
@@ -24,8 +25,9 @@ export default function App() {
     {/* <PreQrScreen/> */}
     {/* <QRScanner/> */}
     {/* <CardCollectionScreen/> */}
-    <AddCardScreen/>
+    {/* <AddCardScreen/> */}
     {/* <Modal/> */}
+    <CardTransactionListScreen/>
     </ImageBackground>
   );
 }
