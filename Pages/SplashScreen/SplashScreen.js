@@ -1,32 +1,50 @@
-import * as React from 'react';
-import { Text, View, StyleSheet,Image} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { Button  } from 'react-native-paper';
+import * as React from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { Button } from "react-native-paper";
 
 export default function SplashScreen() {
   return (
- <View>
+    <View>
+      <View style={styles.header_wrapper}>
+        <Image
+          source={require("../../assets/icon_png.png")}
+          style={styles.header}
+        />
+      </View>
 
-    <View style={styles.header_wrapper}>
-      <Image source = {require('../../assets/icon_png.png')} style={styles.header}  />   
+      <View style={styles.text_wrapper}>
+        <Text style={styles.text_header}>
+          Keep your all cards in One place{" "}
+        </Text>
+        <Text style={styles.desc_1}>Make every payments with the</Text>
+        <Text style={styles.desc_2}>safest way possible</Text>
+      </View>
+
+      <View style={styles.btn_wrapper}>
+        <Button
+          mode="contained"
+          style={styles.btn_getStarted}
+          color="green"
+          onPress={() => console.log("Pressed")}
+        >
+          Get Started
+        </Button>
+
+        <Button
+          mode="outlined"
+          style={styles.btn_lonIn}
+          color="green"
+          onPress={() => console.log("Pressed")}
+          dark={0}
+        >
+          LogIn
+        </Button>
+      </View>
     </View>
-
-    <View style={styles.text_wrapper}>
-    <Text style={styles.text_header}>Keep your all cards in One place </Text>
-    <Text style={styles.desc_1}>Make every payments with the</Text>
-    <Text style={styles.desc_2}>safest way possible</Text>
-    </View>
-
-    <View style={styles.btn_wrapper}>
-    <Button mode="contained" style={styles.btn_getStarted} color='green' onPress={() => console.log('Pressed')} >
-    Get Started
-    </Button>   
-
-    <Button mode="outlined" style={styles.btn_lonIn} color='green' onPress={() => console.log('Pressed')} dark={0}>
-    LogIn
-    </Button>   
-    </View>
-  </View>
   );
 }
 
@@ -38,42 +56,39 @@ const styles = StyleSheet.create({
     // backgroundColor: '',
     // padding: 8,
   },
-  header:{
-   height: hp('5%'), 
-   width: wp('30%'),
-   marginTop: hp("20"),
-   marginLeft:wp("35")
+  header: {
+    height: hp("5%"),
+    width: wp("30%"),
+    marginTop: hp("20"),
+    marginLeft: wp("35"),
   },
-  text_wrapper:{
-    marginTop:hp('15'),
-    marginLeft:wp('20'),
+  text_wrapper: {
+    marginTop: hp("15"),
+    marginLeft: wp("20"),
   },
-  text_header:{
-    fontSize: hp('2.5%'),
-    fontWeight: 'bold',
-    color:'white'
+  text_header: {
+    fontSize: hp("2.5%"),
+    fontWeight: "bold",
+    color: "white",
   },
-  desc_1:{
-    fontSize:hp('2.4%'),
-    marginTop:wp("1%"),
-    color:'white'
+  desc_1: {
+    fontSize: hp("2.4%"),
+    marginTop: wp("1%"),
+    color: "white",
   },
-  desc_2:{
-    fontSize:hp("2.4%"),
-    marginLeft:wp("10%"),
-    color:'white'
+  desc_2: {
+    fontSize: hp("2.4%"),
+    marginLeft: wp("10%"),
+    color: "white",
   },
-  btn_wrapper:{
-    marginTop:hp("25%"),
-    marginLeft:wp("10%"),
-    marginRight:wp("10%")  
+  btn_wrapper: {
+    marginTop: hp("25%"),
+    marginLeft: wp("10%"),
+    marginRight: wp("10%"),
   },
-  btn_getStarted:{
+  btn_getStarted: {},
+  btn_lonIn: {
+    marginTop: hp("2%"),
+    borderColor: "green",
   },
-  btn_lonIn:{
-    marginTop:hp('2%'),
-    borderColor:'green',
-  }
-
-  
 });
