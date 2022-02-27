@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, TextInput, TextInputMask } from "react-native-paper";
-import ModalConatiner from "../../Components/Logo/Modal";
+import ModalConatiner from "../../Components/Modal/Modal";
 
 export default function AddCardScreen() {
   return (
