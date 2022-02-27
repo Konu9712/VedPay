@@ -18,6 +18,7 @@ import AddCardScreen from "./Pages/AddCardScreen/AddCardScreen";
 import Modal from "./Components/Modal/Modal";
 import CardTransactionListScreen from "./Pages/CardTransactionListScreen/CardTransactionListScreen";
 import AddMoneyMainScreen from "./Pages/AddMoneyMainScreen/AddMoneyMainScreen";
+import AddMoneySource from "./Pages/AddMoneySource/AddMoneySource";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -36,7 +37,8 @@ export default function App() {
       {/* <AddCardScreen /> */}
       {/* <Modal /> */}
       {/* <CardTransactionListScreen /> */}
-      <AddMoneyMainScreen />
+      {/* <AddMoneyMainScreen /> */}
+      <AddMoneySource />
     </ImageBackground>
   );
 }

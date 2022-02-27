@@ -5,8 +5,9 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export default function ModalConatiner({ bulkProps }) {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function ModalConatiner({ bulkProps, modalHeight }) {
+  // console.log("modalHeight", modalHeight);
+  const [modalVisible, setModalVisible] = useState(true);
   useEffect(() => {
     setModalVisible(true);
   }, []);
@@ -22,7 +23,9 @@ export default function ModalConatiner({ bulkProps }) {
           }}
         >
           <View style={styles.centeredView}>
-            <View style={styles.modalView}>{bulkProps}</View>
+            <View style={[styles.modalView, { height: hp(`${modalHeight}`) }]}>
+              {bulkProps}
+            </View>
           </View>
         </Modal>
       </View>
