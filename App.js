@@ -15,8 +15,9 @@ import PreQrScreen from "./Pages/PreQrScreen/PreQrScreen";
 import QRScanner from "./Pages/QRScanner/QRScanner";
 import CardCollectionScreen from "./Pages/CardCollectionScreen/CardCollectionScreen";
 import AddCardScreen from "./Pages/AddCardScreen/AddCardScreen";
-import Modal from "./Components/Logo/Modal";
+import Modal from "./Components/Modal/Modal";
 import CardTransactionListScreen from "./Pages/CardTransactionListScreen/CardTransactionListScreen";
+import AddMoneyMainScreen from "./Pages/AddMoneyMainScreen/AddMoneyMainScreen";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -34,7 +35,8 @@ export default function App() {
       {/* <CardCollectionScreen /> */}
       {/* <AddCardScreen /> */}
       {/* <Modal /> */}
-      <CardTransactionListScreen />
+      {/* <CardTransactionListScreen /> */}
+      <AddMoneyMainScreen />
     </ImageBackground>
   );
 }
