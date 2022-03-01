@@ -17,6 +17,7 @@ export default function AddMoneyMainScreen() {
 
       <View style={styles.modal_wrapper}>
         <ModalConatiner
+          modalHeight={70}
           bulkProps={
             <>
               <View style={styles.input_wrapper}>
