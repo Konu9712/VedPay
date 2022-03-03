@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Logo from "../../Components/Logo/Logo";
+import ModalConatiner from "../../Components/Modal/Modal";
 
 export default function GettingStartedScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,59 +24,55 @@ export default function GettingStartedScreen() {
         <Text style={styles.desc_2}>Second Quote line</Text>
       </View>
 
-      <View style={styles.modal_conatiner}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View style={styles.form_wrapper}>
-                <TextInput
-                  label="Name"
-                  mode="outlined"
-                  style={styles.input_}
-                  outlineColor="green"
-                  activeOutlineColor="green"
-                  placeholder="Name"
-                />
+      <ModalConatiner
+        modalHeight={70}
+        bulkProps={
+          <>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View style={styles.form_wrapper}>
+                  <TextInput
+                    label="Name"
+                    mode="outlined"
+                    style={styles.input_}
+                    outlineColor="green"
+                    activeOutlineColor="green"
+                    placeholder="Name"
+                  />
 
-                <TextInput
-                  label="Email"
-                  mode="outlined"
-                  style={styles.input_}
-                  outlineColor="green"
-                  activeOutlineColor="green"
-                  placeholder="Email"
-                />
+                  <TextInput
+                    label="Email"
+                    mode="outlined"
+                    style={styles.input_}
+                    outlineColor="green"
+                    activeOutlineColor="green"
+                    placeholder="Email"
+                  />
 
-                <TextInput
-                  label="Phone Number"
-                  mode="outlined"
-                  style={styles.input_}
-                  outlineColor="green"
-                  activeOutlineColor="green"
-                  placeholder="+91"
-                  keyboardType="number-pad"
-                />
+                  <TextInput
+                    label="Phone Number"
+                    mode="outlined"
+                    style={styles.input_}
+                    outlineColor="green"
+                    activeOutlineColor="green"
+                    placeholder="+91"
+                    keyboardType="number-pad"
+                  />
+                </View>
+
+                <Button
+                  mode="contained"
+                  style={styles.btn_getStarted}
+                  onPress={() => setModalVisible(!modalVisible)}
+                  color="green"
+                >
+                  Get Started
+                </Button>
               </View>
-
-              <Button
-                mode="contained"
-                style={styles.btn_getStarted}
-                onPress={() => setModalVisible(!modalVisible)}
-                color="green"
-              >
-                Get Started
-              </Button>
             </View>
-          </View>
-        </Modal>
-      </View>
+          </>
+        }
+      />
     </View>
   );
 }
@@ -99,33 +96,7 @@ const styles = StyleSheet.create({
     fontSize: hp("3%"),
     color: "#ffff",
   },
-
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    width: wp("95%"),
-    height: hp("70%"),
-    marginTop: hp("30%"),
-    padding: "8%",
-    backgroundColor: "white",
-    borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 9,
-  },
   btn_getStarted: {
     marginTop: hp("2%"),
-  },
-  input_: {
-    marginTop: hp("1%"),
   },
 });
