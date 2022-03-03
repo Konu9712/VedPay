@@ -20,6 +20,7 @@ import CardTransactionListScreen from "./Pages/CardTransactionListScreen/CardTra
 import AddMoneyMainScreen from "./Pages/AddMoneyMainScreen/AddMoneyMainScreen";
 import AddMoneySource from "./Pages/AddMoneySource/AddMoneySource";
 import AddMoneySuccessfully from "./Pages/AddMoneySuccessfully/AddMoneySuccessfully";
+import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -40,7 +41,8 @@ export default function App() {
       {/* <CardTransactionListScreen /> */}
       {/* <AddMoneyMainScreen /> */}
       {/* <AddMoneySource /> */}
-      <AddMoneySuccessfully />
+      {/* <AddMoneySuccessfully /> */}
+      <HistoryMainScreen />
     </ImageBackground>
   );
 }
