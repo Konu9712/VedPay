@@ -22,7 +22,7 @@ export default function AddMoneySuccessfully() {
               <View>
                 <Text>From: ********56 </Text>
                 <Text>Transaction ID: 786433589067 </Text>
-                <View style={styles.amount_Wrapper}>
+                <View style={styles.modalAmount_Wrapper}>
                   <Text style={styles.addedamount}>Rs. 56 </Text>
                   <IconButton icon="check-decagram" color={"green"} size={30} />
                 </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: hp("6%"),
     color: "#ffff",
   },
-  amount_Wrapper: {
+  modalAmount_Wrapper: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
