@@ -22,6 +22,7 @@ import AddMoneySource from "./Pages/AddMoneySource/AddMoneySource";
 import AddMoneySuccessfully from "./Pages/AddMoneySuccessfully/AddMoneySuccessfully";
 import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
 import HistoryDetails from "./Pages/HistoryDetails/HistoryDetails";
+import OutMainScreen from "./Pages/OutMainScreen/OutMainScreen";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -44,7 +45,8 @@ export default function App() {
       {/* <AddMoneySource /> */}
       {/* <AddMoneySuccessfully /> */}
       {/* <HistoryMainScreen /> */}
-      <HistoryDetails />
+      {/* <HistoryDetails /> */}
+      <OutMainScreen />
     </ImageBackground>
   );
 }
