@@ -76,14 +76,7 @@ export default function OutMainScreen() {
           modalHeight={90}
           bulkProps={
             <>
-              <TouchableRipple
-                rippleColor="rgba(0, 0, 0, .32)"
-                style={styles.rippleContainer}
-                borderless={true}
-                onPress={() => console.log("Pressed")}
-              >
-                <FlatList data={contacts} renderItem={renderContacts} />
-              </TouchableRipple>
+              <FlatList data={contacts} renderItem={renderContacts} />
             </>
           }
         />
