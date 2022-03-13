@@ -23,6 +23,7 @@ import AddMoneySuccessfully from "./Pages/AddMoneySuccessfully/AddMoneySuccessfu
 import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
 import HistoryDetails from "./Pages/HistoryDetails/HistoryDetails";
 import OutMainScreen from "./Pages/OutMainScreen/OutMainScreen";
+import OutContactChatScreen from "./Pages/OutContactChatScreen/OutContactChatScreen";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -46,7 +47,8 @@ export default function App() {
       {/* <AddMoneySuccessfully /> */}
       {/* <HistoryMainScreen /> */}
       {/* <HistoryDetails /> */}
-      <OutMainScreen />
+      {/* <OutMainScreen /> */}
+      <OutContactChatScreen />
     </ImageBackground>
   );
 }
