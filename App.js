@@ -24,6 +24,7 @@ import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
 import HistoryDetails from "./Pages/HistoryDetails/HistoryDetails";
 import OutMainScreen from "./Pages/OutMainScreen/OutMainScreen";
 import OutContactChatScreen from "./Pages/OutContactChatScreen/OutContactChatScreen";
+import OutPayScreen from "./Pages/OutPayScreen/OutPayScreen";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -48,7 +49,8 @@ export default function App() {
       {/* <HistoryMainScreen /> */}
       {/* <HistoryDetails /> */}
       {/* <OutMainScreen /> */}
-      <OutContactChatScreen />
+      {/* <OutContactChatScreen /> */}
+      <OutPayScreen />
     </ImageBackground>
   );
 }
