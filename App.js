@@ -39,18 +39,22 @@ export default function App() {
       {/* <OtpScreen /> */}
       {/* <PreQrScreen /> */}
       {/* <QRScanner /> */}
+      {/* Card Collection ---------------------- */}
       {/* <CardCollectionScreen /> */}
       {/* <AddCardScreen /> */}
       {/* <Modal /> */}
       {/* <CardTransactionListScreen /> */}
+      {/* IN------------------------------------ */}
       {/* <AddMoneyMainScreen /> */}
       {/* <AddMoneySource /> */}
       {/* <AddMoneySuccessfully /> */}
+      {/* History-------------------------------- */}
       {/* <HistoryMainScreen /> */}
       {/* <HistoryDetails /> */}
+      {/* OUT------------------------------------ */}
       {/* <OutMainScreen /> */}
-      {/* <OutContactChatScreen /> */}
-      <OutPayScreen />
+      <OutContactChatScreen />
+      {/* <OutPayScreen /> */}
     </ImageBackground>
   );
 }
