@@ -1,6 +1,12 @@
 import * as React from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
-import { Avatar, Button, Card, IconButton, Title } from "react-native-paper";
+import {
+  Avatar,
+  Button,
+  Card,
+  IconButton,
+  Paragraph,
+} from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -57,13 +63,15 @@ export default function OutContactChatScreen() {
                 <Card style={styles.card}>
                   <View style={styles.reciverTextContainer}>
                     <View style={styles.textreciverBar} />
-                    <Title style={styles.reciverText}>Whats up man?</Title>
+                    <Paragraph style={styles.reciverText}>
+                      Whats up man?
+                    </Paragraph>
                   </View>
                 </Card>
 
                 <Card style={[styles.senderCard, styles.card]}>
                   <View style={styles.reciverTextContainer}>
-                    <Title style={styles.senderText}>I am good</Title>
+                    <Paragraph style={styles.senderText}>I am good</Paragraph>
                     <View style={styles.textsenderBar} />
                   </View>
                 </Card>
@@ -78,6 +86,12 @@ export default function OutContactChatScreen() {
                     Pay
                   </Button>
                   <TextInput style={styles.chatInput} placeholder="Miss me ?" />
+                  <IconButton
+                    icon="console-line"
+                    size={20}
+                    onPress={() => console.log("Pressed")}
+                    style={styles.send_Icon}
+                  />
                 </View>
               </View>
             </>
@@ -123,7 +137,7 @@ const styles = StyleSheet.create({
   reciverCard: {},
   amount: {
     fontWeight: "bold",
-    fontSize: hp("3.5%"),
+    fontSize: hp("3%"),
   },
   senderCard: {
     alignItems: "flex-end",
@@ -165,10 +179,16 @@ const styles = StyleSheet.create({
   },
   chatInput: {
     marginLeft: wp("2%"),
-    width: wp("60%"),
+    width: wp("58%"),
     borderRadius: 30,
-    borderColor: "black",
+    borderColor: "grey",
     borderWidth: 1,
     paddingHorizontal: wp("3%"),
+  },
+  pay_btn: {
+    height: hp("5%"),
+  },
+  send_Icon: {
+    height: 20,
   },
 });
