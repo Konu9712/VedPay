@@ -5,8 +5,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ModalConatiner from "../../Components/Modal/Modal";
-import Divider from "../../Components/Divider/Divider";
+import ModalConatiner from "../../../Components/Modal/Modal";
+import Divider from "../../../Components/Divider/Divider";
 
 export default function HistoryMainScreen() {
   return (

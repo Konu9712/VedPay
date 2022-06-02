@@ -5,10 +5,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Card, DataTable, IconButton, Title } from "react-native-paper";
-import MasterCardLogo from "../../Components/Logo/MasterCardLogo";
+import MasterCardLogo from "../../../Components/Logo/MasterCardLogo";
 
 const optionsPerPage = [2, 3, 4];
 const d = Dimensions.get("window");
+
 export default function CardTransactionListScreen() {
   let colors = ["#b957f2", "#654321", "#c11381", "#abcdef", "#685f87"];
   const transctionList = [1, 2, 3, 4, 5, 6, 7, 8, 9];

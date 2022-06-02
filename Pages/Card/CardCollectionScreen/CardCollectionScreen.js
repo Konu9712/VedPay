@@ -1,21 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { Button, Card, IconButton, Title } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Logo from "../../Components/Logo/Logo";
-import MasterCardLogo from "../../Components/Logo/MasterCardLogo";
-import RupayCardLogo from "../../Components/Logo/RupayCardLogo";
-import VisaCardLogo from "../../Components/Logo/VisaCardLogo";
-import ModalConatiner from "../../Components/Modal/Modal";
+import Logo from "../../../Components/Logo/Logo";
+import MasterCardLogo from "../../../Components/Logo/MasterCardLogo";
+import RupayCardLogo from "../../../Components/Logo/RupayCardLogo";
+import VisaCardLogo from "../../../Components/Logo/VisaCardLogo";
+import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function GettingStartedScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function CardCollectionScreen({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
   useEffect(() => {
-    setModalVisible(true);
-  }, []);
+    if (isFocused) {
+      setModalVisible(true);
+    }
+  }, [isFocused]);
+
+  const openAddCardScreen = () => {
+    navigation.navigate("AddCardScreen");
+  };
+
+  const openCardTransactionListScreen = () => {
+    setModalVisible(false);
+    navigation.navigate("CardTransactionListScreen");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.text_container}>
@@ -23,20 +45,29 @@ export default function GettingStartedScreen() {
       </View>
 
       <ModalConatiner
+        ismodalOpen={modalVisible}
         modalHeight={70}
+        navigation={navigation}
         bulkProps={
           <>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <View style={styles.cardWrapper}>
-                  <Card style={styles.card}>
+                  <Card
+                    style={styles.card}
+                    onPress={() => {
+                      openCardTransactionListScreen();
+                    }}
+                  >
                     <View style={{ flexDirection: "row" }}>
                       <View style={styles.cardLogo}>
                         <MasterCardLogo />
                         <Title style={styles.card_no}>*****976</Title>
                       </View>
                       <View style={styles.delete_icon}>
-                        <IconButton icon="trash-can" size={25} />
+                        <TouchableOpacity onPress={() => console.log("Delete")}>
+                          <IconButton icon="trash-can" size={25} />
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </Card>
@@ -69,7 +100,7 @@ export default function GettingStartedScreen() {
                 <Button
                   mode="contained"
                   style={styles.btn_getStarted}
-                  onPress={() => setModalVisible(!modalVisible)}
+                  onPress={() => openAddCardScreen()}
                   color="green"
                 >
                   + Add Card

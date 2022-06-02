@@ -6,25 +6,26 @@ import {
   ImageBackground,
   Dimensions,
 } from "react-native";
-import Constants from "expo-constants";
-import SplashScreen from "./Pages/SplashScreen/SplashScreen";
-import GettingStartedScreen from "./Pages/GettingStarted/GettingStartedScreen";
-import Logo from "./Components/Logo/Logo";
-import OtpScreen from "./Pages/OtpScreen/OtpScreen";
-import PreQrScreen from "./Pages/PreQrScreen/PreQrScreen";
-import QRScanner from "./Pages/QRScanner/QRScanner";
-import CardCollectionScreen from "./Pages/CardCollectionScreen/CardCollectionScreen";
-import AddCardScreen from "./Pages/AddCardScreen/AddCardScreen";
-import Modal from "./Components/Modal/Modal";
-import CardTransactionListScreen from "./Pages/CardTransactionListScreen/CardTransactionListScreen";
-import AddMoneyMainScreen from "./Pages/AddMoneyMainScreen/AddMoneyMainScreen";
-import AddMoneySource from "./Pages/AddMoneySource/AddMoneySource";
-import AddMoneySuccessfully from "./Pages/AddMoneySuccessfully/AddMoneySuccessfully";
-import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
-import HistoryDetails from "./Pages/HistoryDetails/HistoryDetails";
-import OutMainScreen from "./Pages/OutMainScreen/OutMainScreen";
-import OutContactChatScreen from "./Pages/OutContactChatScreen/OutContactChatScreen";
-import OutPayScreen from "./Pages/OutPayScreen/OutPayScreen";
+// import Constants from "expo-constants";
+// import SplashScreen from "./Pages/SplashScreen/SplashScreen";
+// import GettingStartedScreen from "./Pages/GettingStarted/GettingStartedScreen";
+// import Logo from "./Components/Logo/Logo";
+// import OtpScreen from "./Pages/OtpScreen/OtpScreen";
+// import PreQrScreen from "./Pages/PreQrScreen/PreQrScreen";
+// import QRScanner from "./Pages/QRScanner/QRScanner";
+// import CardCollectionScreen from "./Pages/Card/CardCollectionScreen/CardCollectionScreen";
+// import AddCardScreen from "./Pages/Card/AddCardScreen/AddCardScreen";
+// import Modal from "./Components/Modal/Modal";
+// import CardTransactionListScreen from "./Pages/Card/CardTransactionListScreen/CardTransactionListScreen";
+// import AddMoneyMainScreen from "./Pages/In/AddMoneyMainScreen/AddMoneyMainScreen";
+// import AddMoneySource from "./Pages/In/AddMoneySource/AddMoneySource";
+// import AddMoneySuccessfully from "./Pages/AddMoneySuccessfully/AddMoneySuccessfully";
+// import HistoryMainScreen from "./Pages/HistoryMainScreen/HistoryMainScreen";
+// import HistoryDetails from "./Pages/History/HistoryDetails/HistoryDetails";
+// import OutMainScreen from "./Pages/Out/OutMainScreen/OutMainScreen";
+// import OutContactChatScreen from "./Pages/OutContactChatScreen/OutContactChatScreen";
+// import OutPayScreen from "./Pages/Out/OutPayScreen/OutPayScreen";
+import Naviagation from "./Naviagation/Naviagation";
 
 const d = Dimensions.get("window");
 export default function App() {
@@ -53,9 +54,15 @@ export default function App() {
       {/* <HistoryDetails /> */}
       {/* OUT------------------------------------ */}
       {/* <OutMainScreen /> */}
-      <OutContactChatScreen />
+      {/* <OutContactChatScreen /> */}
       {/* <OutPayScreen /> */}
+      <Naviagation />
     </ImageBackground>
+
+    // <Naviagation />
+    // <>
+    //   <Text>HEllo</Text>
+    // </>
   );
 }
 
