@@ -1,20 +1,36 @@
-import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+
+import { Text, View, StyleSheet, BackHandler } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, TextInput, TextInputMask } from "react-native-paper";
-import ModalConatiner from "../../Components/Modal/Modal";
+import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function AddCardScreen() {
+export default function AddCardScreen({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(true);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+  }, [isFocused]);
+
+  const openCardCollectionScreen = () => {
+    navigation.push("CardCollectionScreen");
+  };
   return (
     <View>
       <View style={styles.text_container}>
         <Text style={styles.desc_1}>Add Card</Text>
       </View>
-
       <ModalConatiner
+        ismodalOpen={modalVisible}
+        modalHeight={70}
+        navigation={navigation}
         bulkProps={
           <>
             <View style={styles.input_wrapper}>
@@ -62,7 +78,7 @@ export default function AddCardScreen() {
               <Button
                 mode="contained"
                 style={styles.btn_getStarted}
-                onPress={() => console.log("addCard")}
+                onPress={() => openCardCollectionScreen()}
                 color="green"
               >
                 Add Card

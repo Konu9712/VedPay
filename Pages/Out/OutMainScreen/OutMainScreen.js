@@ -6,7 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ModalConatiner from "../../Components/Modal/Modal";
+import ModalConatiner from "../../../Components/Modal/Modal";
 
 export default function OutMainScreen() {
   const [contacts, setContacts] = useState([]);

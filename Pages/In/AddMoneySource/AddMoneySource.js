@@ -12,11 +12,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ModalConatiner from "../../Components/Modal/Modal";
-import MasterCardLogo from "../../Components/Logo/MasterCardLogo";
-import RupayCardLogo from "../../Components/Logo/RupayCardLogo";
-import VisaCardLogo from "../../Components/Logo/VisaCardLogo";
-import UpiLogo from "../../Components/Logo/UpiLogo";
+import ModalConatiner from "../../../Components/Modal/Modal";
+import MasterCardLogo from "../../../Components/Logo/MasterCardLogo";
+import RupayCardLogo from "../../../Components/Logo/RupayCardLogo";
+import VisaCardLogo from "../../../Components/Logo/VisaCardLogo";
+import UpiLogo from "../../../Components/Logo/UpiLogo";
 
 export default function AddMoneySource() {
   const cardList = [1, 2, 3, 4];

@@ -4,13 +4,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { BackHandler } from "react-native-web";
 
-export default function ModalConatiner({ bulkProps, modalHeight }) {
-  // console.log("modalHeight", modalHeight);
+export default function ModalConatiner({
+  bulkProps,
+  modalHeight,
+  ismodalOpen,
+  navigation,
+  onRequestClose,
+}) {
   const [modalVisible, setModalVisible] = useState(true);
+
   useEffect(() => {
-    setModalVisible(true);
-  }, []);
+    setModalVisible(ismodalOpen);
+  }, [ismodalOpen]);
+
   return (
     <View style={styles.container}>
       <View style={styles.modal_conatiner}>
@@ -19,7 +27,22 @@ export default function ModalConatiner({ bulkProps, modalHeight }) {
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
+            // setModalVisible(modalVisible);
+            // console.log(
+            //   "navigation.goBack()",
+            //   navigation.goBack() || navigation.push("CardCollectionScreen")
+            // );
+            // console.log("navigation", navigation.getState());
+            //   console.log("navigation", navigation.goBack());
+            //   if (navigation.goBack()) {
+            //     // navigation.goBack();
+            //     console.log("navigation.goBack()");
+            //   } else {
+            //     console.log("undefined back");
+            // navigation.goBack();
+            // onRequestClose();
+            // if (navigation.goBack()) navigation.goBack();
+            if (navigation.goBack()) navigation.goBack();
           }}
         >
           <View style={styles.centeredView}>
