@@ -11,7 +11,6 @@ export default function ModalConatiner({
   modalHeight,
   ismodalOpen,
   navigation,
-  onRequestClose,
 }) {
   const [modalVisible, setModalVisible] = useState(true);
 
@@ -27,22 +26,9 @@ export default function ModalConatiner({
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            // setModalVisible(modalVisible);
-            // console.log(
-            //   "navigation.goBack()",
-            //   navigation.goBack() || navigation.push("CardCollectionScreen")
-            // );
-            // console.log("navigation", navigation.getState());
-            //   console.log("navigation", navigation.goBack());
-            //   if (navigation.goBack()) {
-            //     // navigation.goBack();
-            //     console.log("navigation.goBack()");
-            //   } else {
-            //     console.log("undefined back");
-            // navigation.goBack();
-            // onRequestClose();
-            // if (navigation.goBack()) navigation.goBack();
-            if (navigation.goBack()) navigation.goBack();
+            if (navigation.goBack()) {
+              navigation.goBack();
+            }
           }}
         >
           <View style={styles.centeredView}>

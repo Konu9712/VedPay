@@ -17,9 +17,13 @@ export default function AddCardScreen({ navigation }) {
     if (isFocused) {
       setModalVisible(true);
     }
+    return () => {
+      setModalVisible(false);
+    };
   }, [isFocused]);
 
-  const openCardCollectionScreen = () => {
+  const openCardCollectionScreen = async () => {
+    await setModalVisible(false);
     navigation.push("CardCollectionScreen");
   };
   return (
