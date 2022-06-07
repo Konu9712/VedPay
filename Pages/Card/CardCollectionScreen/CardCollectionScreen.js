@@ -27,14 +27,16 @@ export default function CardCollectionScreen({ navigation }) {
     if (isFocused) {
       setModalVisible(true);
     }
+    return () => {
+      setModalVisible(false);
+    };
   }, [isFocused]);
-
   const openAddCardScreen = () => {
     navigation.navigate("AddCardScreen");
   };
 
-  const openCardTransactionListScreen = () => {
-    setModalVisible(false);
+  const openCardTransactionListScreen = async () => {
+    await setModalVisible(false);
     navigation.navigate("CardTransactionListScreen");
   };
 

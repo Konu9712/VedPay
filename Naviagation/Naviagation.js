@@ -14,6 +14,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CardCollectionScreen from "../Pages/Card/CardCollectionScreen/CardCollectionScreen";
 import AddCardScreen from "../Pages/Card/AddCardScreen/AddCardScreen";
 import CardTransactionListScreen from "../Pages/Card/CardTransactionListScreen/CardTransactionListScreen";
+import MainScreen from "../Pages/MainScreen/MainScreen";
 
 const Stack = createStackNavigator();
 const d = Dimensions.get("window");
@@ -30,6 +31,14 @@ function Card() {
         name="CardTransactionListScreen"
         component={CardTransactionListScreen}
       />
+    </Stack.Navigator>
+  );
+}
+
+function Main() {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="MainScreen" component={MainScreen} />
     </Stack.Navigator>
   );
 }
@@ -63,11 +72,25 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      // initialRouteName="Card"
+      initialRouteName="Main"
       tabBarOptions={{
         activeTintColor: "green",
       }}
     >
+      <Tab.Screen
+        name="In"
+        component={In}
+        options={{
+          tabBarLabel: "In",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="arrow-down-bold-box"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Card"
         component={Card}
@@ -84,16 +107,12 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="In"
-        component={In}
+        name="Main"
+        component={Main}
         options={{
-          tabBarLabel: "In",
+          tabBarLabel: "Main",
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="arrow-down-bold-box"
-              color={color}
-              size={size}
-            />
+            <MaterialCommunityIcons name="wallet" color={color} size={size} />
           ),
         }}
       />
