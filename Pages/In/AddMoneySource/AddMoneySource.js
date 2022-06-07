@@ -1,13 +1,6 @@
-import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  FlatList,
-} from "react-native";
-import { Card, IconButton, Title } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { Text, View, StyleSheet, FlatList } from "react-native";
+import { Card, Title } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,15 +10,46 @@ import MasterCardLogo from "../../../Components/Logo/MasterCardLogo";
 import RupayCardLogo from "../../../Components/Logo/RupayCardLogo";
 import VisaCardLogo from "../../../Components/Logo/VisaCardLogo";
 import UpiLogo from "../../../Components/Logo/UpiLogo";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function AddMoneySource() {
-  const cardList = [1, 2, 3, 4];
+export default function AddMoneySource({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
+  const cardList = [1, 2, 3, 4, 5, 6];
   let colors = ["#b957f2", "#654321", "#c11381", "#abcdef", "#685f87"];
 
+  const openAddMoneySuccessfully = () => {
+    navigation.navigate("AddMoneySuccessfully");
+  };
+
   const renderItem = ({ item, index }) => {
+    if (index === 5) {
+      // ONLY for UI purpose in UPI [You can give type from backend]
+      return (
+        <Card style={[styles.card, { backgroundColor: "grey", opacity: 0.7 }]}>
+          <View style={styles.upi_container}>
+            <UpiLogo />
+            <Title>user@vedPay.com</Title>
+          </View>
+        </Card>
+      );
+    }
     return (
       <>
         <Card
+          onPress={() => {
+            openAddMoneySuccessfully();
+          }}
           style={[
             styles.card,
             { backgroundColor: colors[index % colors.length] },
@@ -41,6 +65,7 @@ export default function AddMoneySource() {
       </>
     );
   };
+
   return (
     <View>
       <View style={styles.text_container}>
@@ -49,24 +74,17 @@ export default function AddMoneySource() {
 
       <View style={styles.modal_container}>
         <ModalConatiner
-          horizontal={true}
+          ismodalOpen={modalVisible}
           modalHeight={90}
+          navigation={navigation}
           bulkProps={
             <>
-              <ScrollView>
-                <FlatList data={cardList} renderItem={renderItem} />
-                <Card
-                  style={[
-                    styles.card,
-                    { backgroundColor: "grey", opacity: 0.7 },
-                  ]}
-                >
-                  <View style={styles.upi_container}>
-                    <UpiLogo />
-                    <Title>user@vedPay.com</Title>
-                  </View>
-                </Card>
-              </ScrollView>
+              <FlatList
+                data={cardList}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                style={styles.sourceList}
+              />
             </>
           }
         />
@@ -100,5 +118,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: hp("3%"),
     marginLeft: wp("2.5%"),
+  },
+  sourceList: {
+    marginBottom: hp("8%"),
   },
 });

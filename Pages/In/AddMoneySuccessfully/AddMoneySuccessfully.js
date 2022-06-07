@@ -1,13 +1,26 @@
-import * as React from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Chip, IconButton } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ModalConatiner from "../../Components/Modal/Modal";
+import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function AddMoneySuccessfully() {
+export default function AddMoneySuccessfully({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
   return (
     <View>
       <View style={styles.amout_wrapper}>
@@ -16,7 +29,10 @@ export default function AddMoneySuccessfully() {
       </View>
       <View>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={70}
+          navigation={navigation}
+          onBackPushToMain={true}
           bulkProps={
             <>
               <View>
