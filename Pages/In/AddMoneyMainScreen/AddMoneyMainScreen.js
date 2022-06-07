@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import {
@@ -7,7 +8,22 @@ import {
 } from "react-native-responsive-screen";
 import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function AddMoneyMainScreen() {
+export default function AddMoneyMainScreen({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
+  const openAddMoneySource = () => {
+    navigation.navigate("AddMoneySource");
+  };
   return (
     <View>
       <View style={styles.amout_wrapper}>
@@ -17,7 +33,9 @@ export default function AddMoneyMainScreen() {
 
       <View style={styles.modal_wrapper}>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={70}
+          navigation={navigation}
           bulkProps={
             <>
               <View style={styles.input_wrapper}>
@@ -36,7 +54,7 @@ export default function AddMoneyMainScreen() {
                 <Button
                   mode="contained"
                   style={styles.add_money_btn}
-                  onPress={() => console.log("add_money_btn")}
+                  onPress={() => openAddMoneySource()}
                   color="green"
                 >
                   ADD

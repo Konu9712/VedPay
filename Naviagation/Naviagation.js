@@ -15,9 +15,25 @@ import CardCollectionScreen from "../Pages/Card/CardCollectionScreen/CardCollect
 import AddCardScreen from "../Pages/Card/AddCardScreen/AddCardScreen";
 import CardTransactionListScreen from "../Pages/Card/CardTransactionListScreen/CardTransactionListScreen";
 import MainScreen from "../Pages/MainScreen/MainScreen";
+import AddMoneyMainScreen from "../Pages/In/AddMoneyMainScreen/AddMoneyMainScreen";
+import AddMoneySource from "../Pages/In/AddMoneySource/AddMoneySource";
+import AddMoneySuccessfully from "../Pages/In/AddMoneySuccessfully/AddMoneySuccessfully";
 
 const Stack = createStackNavigator();
 const d = Dimensions.get("window");
+
+function In() {
+  return (
+    <Stack.Navigator headerMode="none" initialRouteName="AddMoneyMainScreen">
+      <Stack.Screen name="AddMoneyMainScreen" component={AddMoneyMainScreen} />
+      <Stack.Screen name="AddMoneySource" component={AddMoneySource} />
+      <Stack.Screen
+        name="AddMoneySuccessfully"
+        component={AddMoneySuccessfully}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function Card() {
   return (
@@ -40,14 +56,6 @@ function Main() {
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="MainScreen" component={MainScreen} />
     </Stack.Navigator>
-  );
-}
-
-function In() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>In!</Text>
-    </View>
   );
 }
 
@@ -82,6 +90,7 @@ function MyTabs() {
         component={In}
         options={{
           tabBarLabel: "In",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="arrow-down-bold-box"
@@ -97,6 +106,7 @@ function MyTabs() {
         options={{
           // tabBarVisible: false,
           tabBarLabel: "Card",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="card-bulleted"
@@ -111,6 +121,7 @@ function MyTabs() {
         component={Main}
         options={{
           tabBarLabel: "Main",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="wallet" color={color} size={size} />
           ),
@@ -121,6 +132,7 @@ function MyTabs() {
         component={Out}
         options={{
           tabBarLabel: "Out",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="arrow-up-bold-box"
@@ -135,6 +147,7 @@ function MyTabs() {
         component={Settings}
         options={{
           tabBarLabel: "Settings",
+          unmountOnBlur: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="settings" color={color} size={size} />
           ),

@@ -11,6 +11,7 @@ export default function ModalConatiner({
   modalHeight,
   ismodalOpen,
   navigation,
+  onBackPushToMain,
 }) {
   const [modalVisible, setModalVisible] = useState(true);
 
@@ -26,7 +27,9 @@ export default function ModalConatiner({
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            if (navigation.goBack()) {
+            if (onBackPushToMain) {
+              navigation.navigate("Main");
+            } else if (navigation.goBack()) {
               navigation.goBack();
             }
           }}
