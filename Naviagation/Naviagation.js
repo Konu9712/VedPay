@@ -18,6 +18,9 @@ import MainScreen from "../Pages/MainScreen/MainScreen";
 import AddMoneyMainScreen from "../Pages/In/AddMoneyMainScreen/AddMoneyMainScreen";
 import AddMoneySource from "../Pages/In/AddMoneySource/AddMoneySource";
 import AddMoneySuccessfully from "../Pages/In/AddMoneySuccessfully/AddMoneySuccessfully";
+import OutMainScreen from "../Pages/Out/OutMainScreen/OutMainScreen";
+import OutContactChatScreen from "../Pages/Out/OutContactChatScreen/OutContactChatScreen";
+import OutPayScreen from "../Pages/Out/OutPayScreen/OutPayScreen";
 
 const Stack = createStackNavigator();
 const d = Dimensions.get("window");
@@ -61,9 +64,14 @@ function Main() {
 
 function Out() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Out!</Text>
-    </View>
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="OutMainScreen" component={OutMainScreen} />
+      <Stack.Screen
+        name="OutContactChatScreen"
+        component={OutContactChatScreen}
+      />
+      <Stack.Screen name="OutPayScreen" component={OutPayScreen} />
+    </Stack.Navigator>
   );
 }
 

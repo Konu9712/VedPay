@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import {
@@ -7,7 +8,23 @@ import {
 } from "react-native-responsive-screen";
 import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function OutPayScreen() {
+export default function OutPayScreen({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
+  const openOutContactChatScreen = () => {
+    navigation.navigate("OutContactChatScreen");
+  };
+
   return (
     <View>
       <View style={styles.contact_Container}>
@@ -17,7 +34,9 @@ export default function OutPayScreen() {
 
       <View style={styles.modal_wrapper}>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={70}
+          navigation={navigation}
           bulkProps={
             <>
               <View style={styles.input_wrapper}>
@@ -36,7 +55,7 @@ export default function OutPayScreen() {
                 <Button
                   mode="contained"
                   style={styles.add_money_btn}
-                  onPress={() => console.log("add_money_btn")}
+                  onPress={() => openOutContactChatScreen()}
                   color="green"
                 >
                   Pay
