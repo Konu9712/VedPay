@@ -21,6 +21,8 @@ import AddMoneySuccessfully from "../Pages/In/AddMoneySuccessfully/AddMoneySucce
 import OutMainScreen from "../Pages/Out/OutMainScreen/OutMainScreen";
 import OutContactChatScreen from "../Pages/Out/OutContactChatScreen/OutContactChatScreen";
 import OutPayScreen from "../Pages/Out/OutPayScreen/OutPayScreen";
+import HistoryMainScreen from "../Pages/MainScreen/History/HistoryMainScreen/HistoryMainScreen";
+import HistoryDetails from "../Pages/MainScreen/History/HistoryDetails/HistoryDetails";
 
 const Stack = createStackNavigator();
 const d = Dimensions.get("window");
@@ -58,6 +60,8 @@ function Main() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="HistoryMainScreen" component={HistoryMainScreen} />
+      <Stack.Screen name="HistoryDetails" component={HistoryDetails} />
     </Stack.Navigator>
   );
 }

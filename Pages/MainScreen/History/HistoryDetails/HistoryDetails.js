@@ -1,14 +1,27 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Text, View, StyleSheet } from "react-native";
 import { Avatar, Button, Card, IconButton } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import ModalConatiner from "../../../Components/Modal/Modal";
-import Divider from "../../../Components/Divider/Divider";
+import ModalConatiner from "../../../../Components/Modal/Modal";
+import Divider from "../../../../Components/Divider/Divider";
 
-export default function HistoryMainScreen() {
+export default function HistoryDetails({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
   return (
     <View>
       <View style={styles.amout_wrapper}>
@@ -18,7 +31,9 @@ export default function HistoryMainScreen() {
       </View>
       <View>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={90}
+          navigation={navigation}
           bulkProps={
             <>
               <View>
