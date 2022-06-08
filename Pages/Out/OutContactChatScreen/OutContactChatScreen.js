@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TextInput } from "react-native";
 import {
   Avatar,
@@ -11,10 +12,26 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Divider from "../../Components/Divider/Divider";
-import ModalConatiner from "../../Components/Modal/Modal";
+import Divider from "../../../Components/Divider/Divider";
+import ModalConatiner from "../../../Components/Modal/Modal";
 
-export default function OutContactChatScreen() {
+export default function OutContactChatScreen({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
+  useEffect(() => {
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
+  const openOutPayScreen = () => {
+    navigation.navigate("OutPayScreen");
+  };
+
   return (
     <View>
       <View style={styles.contact_Container}>
@@ -24,7 +41,9 @@ export default function OutContactChatScreen() {
 
       <View style={styles.modal_wrapper}>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={90}
+          navigation={navigation}
           bulkProps={
             <>
               <View style={styles.modalContainer}>
@@ -80,7 +99,7 @@ export default function OutContactChatScreen() {
                   <Button
                     mode="contained"
                     style={styles.pay_btn}
-                    onPress={() => console.log("addCard")}
+                    onPress={() => openOutPayScreen()}
                     color="green"
                   >
                     Pay
@@ -104,8 +123,8 @@ export default function OutContactChatScreen() {
 
 const styles = StyleSheet.create({
   contact_Container: {
-    marginTop: hp("10%"),
-    marginLeft: wp("15%"),
+    marginTop: hp("5%"),
+    marginLeft: wp("10%"),
     flexDirection: "row",
     alignItems: "center",
   },

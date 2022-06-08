@@ -7,13 +7,22 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import ModalConatiner from "../../../Components/Modal/Modal";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function OutMainScreen() {
+export default function OutMainScreen({ navigation }) {
+  const isFocused = useIsFocused();
+
   const [contacts, setContacts] = useState([]);
-
+  const [modalVisible, setModalVisible] = useState(true);
   useEffect(() => {
-    loadContacts();
-  }, []);
+    if (isFocused) {
+      setModalVisible(true);
+      loadContacts();
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
 
   const loadContacts = useCallback(async () => {
     const { status } = await Contacts.requestPermissionsAsync();
@@ -24,8 +33,12 @@ export default function OutMainScreen() {
       if (data.length > 0) {
         setContacts(data);
       }
-    }
+    } else navigation.navigate("Main");
   }, []);
+
+  const openOutContactChatScreen = () => {
+    navigation.navigate("OutContactChatScreen");
+  };
 
   const renderContacts = ({ item, index }) => {
     const avatarInitial = item?.name?.substring(0, 2);
@@ -44,7 +57,7 @@ export default function OutMainScreen() {
             rippleColor="rgba(0, 0, 0, .32)"
             style={styles.rippleContainer}
             borderless={true}
-            onPress={() => console.log("Pressed")}
+            onPress={() => openOutContactChatScreen()}
           >
             <View style={styles.contactContainer}>
               <Avatar.Text size={50} label={avatarInitial} />
@@ -73,7 +86,9 @@ export default function OutMainScreen() {
       </View>
       <View style={styles.modalContainer}>
         <ModalConatiner
+          ismodalOpen={modalVisible}
           modalHeight={90}
+          navigation={navigation}
           bulkProps={
             <>
               <FlatList data={contacts} renderItem={renderContacts} />
