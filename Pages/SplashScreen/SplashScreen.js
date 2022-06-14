@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import * as Contacts from "expo-contacts";
 import { Text, View, StyleSheet, Image } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -6,7 +7,33 @@ import {
 } from "react-native-responsive-screen";
 import { Button } from "react-native-paper";
 
-export default function SplashScreen() {
+export default function SplashScreen({ navigation }) {
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    loadContacts();
+  }, []);
+
+  const loadContacts = useCallback(async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status === "granted") {
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.PhoneNumbers],
+      });
+      if (data.length > 0) {
+        setContacts(data); //Store the contacts in the reducer
+      }
+    }
+  }, []);
+
+  const openSignUpScreen = () => {
+    navigation.navigate("SignUp");
+  };
+
+  const openLogIn = () => {
+    navigation.navigate("LogIn");
+  };
+
   return (
     <View>
       <View style={styles.header_wrapper}>
@@ -29,7 +56,7 @@ export default function SplashScreen() {
           mode="contained"
           style={styles.btn_getStarted}
           color="green"
-          onPress={() => console.log("Pressed")}
+          onPress={() => openSignUpScreen()}
         >
           Get Started
         </Button>
@@ -38,7 +65,7 @@ export default function SplashScreen() {
           mode="outlined"
           style={styles.btn_lonIn}
           color="green"
-          onPress={() => console.log("Pressed")}
+          onPress={() => openLogIn()}
           dark={0}
         >
           LogIn

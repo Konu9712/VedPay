@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import {
@@ -8,11 +9,23 @@ import {
 import Logo from "../../Components/Logo/Logo";
 import ModalConatiner from "../../Components/Modal/Modal";
 
-export default function GettingStartedScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function SignUp({ navigation }) {
+  const isFocused = useIsFocused();
+
+  const [modalVisible, setModalVisible] = useState(true);
   useEffect(() => {
-    setModalVisible(true);
-  }, []);
+    if (isFocused) {
+      setModalVisible(true);
+    }
+    return () => {
+      setModalVisible(false);
+    };
+  }, [isFocused]);
+
+  const openPreQrScreenScreen = () => {
+    navigation.navigate("PreQrScreen");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logo_container}>
@@ -25,7 +38,9 @@ export default function GettingStartedScreen() {
       </View>
 
       <ModalConatiner
+        ismodalOpen={modalVisible}
         modalHeight={70}
+        navigation={navigation}
         bulkProps={
           <>
             <View style={styles.centeredView}>
@@ -58,12 +73,21 @@ export default function GettingStartedScreen() {
                     placeholder="+91"
                     keyboardType="number-pad"
                   />
+
+                  <TextInput
+                    label="Password"
+                    mode="outlined"
+                    style={styles.input_}
+                    outlineColor="green"
+                    activeOutlineColor="green"
+                    placeholder="Password"
+                  />
                 </View>
 
                 <Button
                   mode="contained"
                   style={styles.btn_getStarted}
-                  onPress={() => setModalVisible(!modalVisible)}
+                  onPress={() => openPreQrScreenScreen()}
                   color="green"
                 >
                   Get Started
