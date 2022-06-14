@@ -7,7 +7,11 @@ import {
 } from "react-native-responsive-screen";
 import Logo from "../../Components/Logo/Logo";
 
-export default function PreQrScreen() {
+export default function PreQrScreen({ navigation }) {
+  const openQr_ScannerScreen = () => {
+    navigation.navigate("Qr_Scanner");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.welcome_text_container}>
@@ -30,7 +34,7 @@ export default function PreQrScreen() {
         <Button
           mode="contained"
           style={styles.qr_btn}
-          onPress={() => console.log("QR Scanner")}
+          onPress={() => openQr_ScannerScreen()}
           color="green"
         >
           Scan QR
