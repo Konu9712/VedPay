@@ -4,6 +4,7 @@ import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 
 import TabNavigation from "./TabNavigation";
 import ScreenWithoutHome from "./ScreenWithoutHome";
+import Loader from "../Components/Loader/Loader";
 
 const d = Dimensions.get("window");
 
@@ -25,7 +26,8 @@ export default function Naviagation() {
         source={require("../assets/background.png")}
         imageStyle={{ resizeMode: "repeat" }}
       >
-        {token && qr ? <TabNavigation /> : <ScreenWithoutHome />}
+        <Loader />
+        {/* {token && qr ? <TabNavigation /> : <ScreenWithoutHome />} */}
       </ImageBackground>
     </NavigationContainer>
   );
