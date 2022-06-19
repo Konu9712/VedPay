@@ -4,12 +4,13 @@ import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 
 import TabNavigation from "./TabNavigation";
 import ScreenWithoutHome from "./ScreenWithoutHome";
-import Loader from "../Components/Loader/Loader";
+import { useSelector } from "react-redux";
 
 const d = Dimensions.get("window");
 
 export default function Naviagation() {
-  const [token, setToken] = useState(false);
+  const authSelector = useSelector((state) => state.auth);
+  const { token } = authSelector;
   const [qr, setQR] = useState(false);
 
   const MyTheme = {
@@ -26,8 +27,7 @@ export default function Naviagation() {
         source={require("../assets/background.png")}
         imageStyle={{ resizeMode: "repeat" }}
       >
-        <Loader />
-        {/* {token && qr ? <TabNavigation /> : <ScreenWithoutHome />} */}
+        {token && qr ? <TabNavigation /> : <ScreenWithoutHome />}
       </ImageBackground>
     </NavigationContainer>
   );

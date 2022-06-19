@@ -2,13 +2,21 @@ import { createAction } from "@reduxjs/toolkit";
 import * as Actions from "./types";
 
 /**
+ * @desc Set Auth Loader
+ */
+export const setAuthLoader = createAction(Actions.SET_AUTH_LOADER);
+/**
  * @desc Set Current User
  */
 export const setCurrentUser = createAction(Actions.SET_CURRENT_USER);
-// /**
-//  * @desc Set Auth Loader
-//  */
-// export const setAuthLoader = createAction(Actions.SET_AUTH_LOADER);
+/**
+ * @desc Update Current User
+ */
+export const updateCurrentUser = createAction(Actions.UPDATE_CURRENT_USER);
+/**
+ * @desc set Token
+ */
+export const setToken = createAction(Actions.SET_TOKEN);
 // /**
 //  * @desc Set Auth Loader
 //  */
