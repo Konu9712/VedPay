@@ -41,6 +41,7 @@ export default function SignUp({ navigation }) {
     },
     [dispatch]
   );
+
   const openPreQrScreenScreen = async () => {
     let result = await dispatch(signup(currentUser));
     if (result) navigation.navigate("PreQrScreen");

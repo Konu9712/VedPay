@@ -49,6 +49,41 @@ export const signup = (payload) => async (dispatch) => {
   }
 };
 
+/**
+ * @desc LogIn User
+ */
+export const login = (payload) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    dispatch(setAuthLoader(true));
+
+    if (isEmpty(payload?.phoneNumber)) {
+      dispatchAuthError("Phone Number is Required", dispatch);
+      return false;
+    } else if (isEmpty(payload?.password)) {
+      dispatchAuthError("Password is Required", dispatch);
+      return false;
+    }
+
+    const response = await axios.post(`${VEDPAY_API}/api/auth/login`, payload);
+    if (response?.data) {
+      const { message, user } = response?.data;
+      var userProfile = jwt_decode(user?.token);
+      dispatch(setToken(user?.token));
+      dispatch(updateCurrentUser(userProfile));
+      return true;
+    }
+  } catch (error) {
+    dispatchAuthError(
+      getAPIErrorReason(error) || "Unable to LogIn, please try again",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setAuthLoader(false));
+  }
+};
+
 function dispatchAuthError(msg, dispatch) {
   dispatch(setErrorMessage(msg));
 }
