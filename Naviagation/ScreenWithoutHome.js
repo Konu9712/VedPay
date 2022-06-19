@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useCallback } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import LogIn from "../Pages/LogIn/LogIn";
 import PreQrScreen from "../Pages/PreQrScreen/PreQrScreen";
@@ -12,7 +12,6 @@ import SplashScreen from "../Pages/SplashScreen/SplashScreen";
 export default function ScreenWithoutHome() {
   const authSelector = useSelector((state) => state.auth);
   const { token } = authSelector;
-  // Condition in Stack navigator
   const Stack = createStackNavigator();
 
   const AuthStack = useCallback(() => {

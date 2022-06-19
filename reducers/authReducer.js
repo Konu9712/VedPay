@@ -22,9 +22,7 @@ const currentUserReducer = createReducerOrig(userintialState, (builder) => {
       return { ...userProfile };
     })
     .addCase(Actions.UPDATE_CURRENT_USER, (state, action) => {
-      const userProfile = { ...state };
-      userProfile[action.payload.propsName] = action.payload.value;
-      return { ...userProfile };
+      return action?.payload;
     });
 });
 
