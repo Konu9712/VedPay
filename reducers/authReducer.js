@@ -3,37 +3,40 @@ import { createReducer as createReducerOrig } from "@reduxjs/toolkit";
 import { createReducer } from "../helper/reduxHelper";
 import * as Actions from "./../actions/types";
 
-const currentUserReducer = createReducer({
-  initialState: null,
-  actionType: Actions.SET_CURRENT_USER,
+const authLoaderReducer = createReducer({
+  initialState: false,
+  actionType: Actions.SET_AUTH_LOADER,
 });
-// const authLoaderReducer = createReducer({
-//   initialState: null,
-//   actionType: Actions.SET_AUTH_LOADER
-// });
-// const authValidationErrorReducer = createReducer({
-//   initialState: null,
-//   actionType: Actions.SET_AUTH_VALIDATION_ERRORS
-// });
 
-// const initialState = {};
-// const currentuserProfileReducer = createReducerOrig(initialState, (builder) => {
-//   builder
-//     .addCase(Actions.SET_CURRENT_USER_PROFILE, (state = initialState, action) => {
-//       return { ...(action.payload || {}) };
-//     })
-//     .addCase(Actions.UPDATE_CURRENT_USER_PROFILE_FIELD_VALUE, (state, action) => {
-//       const userProfile = { ...state };
-//       userProfile[action.payload.propName] = action.payload.value;
-//       return { ...userProfile };
-//     });
-// });
+const userintialState = {
+  name: "",
+  email: "",
+  phoneNumber: "",
+  password: "",
+};
+const currentUserReducer = createReducerOrig(userintialState, (builder) => {
+  builder
+    .addCase(Actions.SET_CURRENT_USER, (state, action) => {
+      const userProfile = { ...state };
+      userProfile[action.payload.propsName] = action.payload.value;
+      return { ...userProfile };
+    })
+    .addCase(Actions.UPDATE_CURRENT_USER, (state, action) => {
+      const userProfile = { ...state };
+      userProfile[action.payload.propsName] = action.payload.value;
+      return { ...userProfile };
+    });
+});
+
+const tokenReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_TOKEN,
+});
 
 const authReducer = combineReducers({
+  loading: authLoaderReducer,
   currentUser: currentUserReducer,
-  //   currentUserProfile: currentuserProfileReducer,
-  //   loading: authLoaderReducer,
-  //   validationError: authValidationErrorReducer
+  token: tokenReducer,
 });
 
 export default authReducer;
