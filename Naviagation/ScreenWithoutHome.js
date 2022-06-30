@@ -20,6 +20,7 @@ export default function ScreenWithoutHome() {
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="LogIn" component={LogIn} />
+        <Stack.Screen name="PreQrScreen" component={PreQrScreen} />
       </Stack.Navigator>
     );
   }, []);

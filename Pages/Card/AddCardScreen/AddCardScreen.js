@@ -8,10 +8,27 @@ import {
 } from "react-native-responsive-screen";
 import { Button, TextInput, TextInputMask } from "react-native-paper";
 import ModalConatiner from "../../../Components/Modal/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { addCardAction } from "../../../actions/cardActions";
+import { CreditCardInput } from "react-native-credit-card-input-plus";
+import { addCardService } from "../../../services/cardService";
+import Loader from "../../../Components/Loader/Loader";
+import AlertMessage from "../../../Components/Alert/AlertMessage";
+import { isEmpty } from "../../../helper/commpn";
 
 export default function AddCardScreen({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(true);
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+
+  const [modalVisible, setModalVisible] = useState(true);
+
+  const cardSelector = useSelector((state) => state.card);
+  const authSelector = useSelector((state) => state.auth);
+  const alertSelecter = useSelector((state) => state.message);
+
+  const { addCard, loading } = cardSelector;
+  const { errorMessage } = alertSelecter;
+  const { currentUser } = authSelector;
 
   useEffect(() => {
     if (isFocused) {
@@ -19,78 +36,100 @@ export default function AddCardScreen({ navigation }) {
     }
     return () => {
       setModalVisible(false);
+      dispatch(addCardAction());
     };
   }, [isFocused]);
 
+  const onChangeCardInput = useCallback(
+    (form) => {
+      const { number, cvc, expiry, ...otherValues } = form?.values;
+      const cardValues = {
+        cvv: cvc,
+        cardNumber: number.replace(/ /g, ""),
+        expiry: expiry.replace("/", ""),
+        ...otherValues,
+      };
+      dispatch(addCardAction(cardValues));
+    },
+    [dispatch]
+  );
+
   const openCardCollectionScreen = async () => {
-    await setModalVisible(false);
-    navigation.push("CardCollectionScreen");
+    let result = await dispatch(addCardService(addCard, currentUser?.userId));
+    if (result) {
+      await setModalVisible(false);
+      navigation.push("CardCollectionScreen");
+    }
   };
+
+  const eraseCardDetails = useCallback(() => {
+    dispatch(addCardAction());
+    return;
+  }, []);
+
   return (
     <View>
       <View style={styles.text_container}>
         <Text style={styles.desc_1}>Add Card</Text>
       </View>
-      <ModalConatiner
-        ismodalOpen={modalVisible}
-        modalHeight={70}
-        navigation={navigation}
-        bulkProps={
-          <>
-            <View style={styles.input_wrapper}>
-              <TextInput
-                label="Card Number"
-                mode="flat"
-                style={styles.card_number}
-                outlineColor="green"
-                activeUnderlineColor="green"
-                placeholder="Card Number"
-                keyboardType="number-pad"
-              />
-              <View style={styles.second_row}>
-                <TextInput
-                  label="Valid Till"
-                  mode="flat"
-                  style={styles.expiry_date}
-                  outlineColor="green"
-                  activeUnderlineColor="green"
-                  placeholder="MM / YY"
-                  keyboardType="number-pad"
-                />
-
-                <TextInput
-                  label="CVV"
-                  mode="flat"
-                  style={styles.cvv}
-                  outlineColor="green"
-                  activeUnderlineColor="green"
-                  placeholder="CVV"
-                  keyboardType="number-pad"
-                />
+      {loading ? (
+        <Loader />
+      ) : !isEmpty(errorMessage) ? (
+        <>
+          <AlertMessage />
+          {() => eraseCardDetails()}
+        </>
+      ) : (
+        <ModalConatiner
+          ismodalOpen={modalVisible}
+          modalHeight={70}
+          navigation={navigation}
+          bulkProps={
+            <>
+              <View style={styles.input_wrapper}>
+                <View style={styles.cardWrapper}>
+                  <CreditCardInput
+                    placeholders={{
+                      number: "1234 5678 1234 5678",
+                      expiry: "MM/YY",
+                      cvc: "CVV",
+                      name: "Name on Card",
+                    }}
+                    labels={{
+                      number: "CARD NUMBER",
+                      expiry: "EXPIRY",
+                      cvc: "CVV",
+                      name: "NAME ON CARD",
+                    }}
+                    labelStyle={styles.inputLabel}
+                    inputContainerStyle={{
+                      maxWidth: wp("50%"),
+                      borderBottomWidth: 0.5,
+                      borderBottomColor: "black",
+                    }}
+                    requiresName={true}
+                    allowScroll={true}
+                    addtionalInputsProps={addCard}
+                    onChange={(form) => {
+                      onChangeCardInput(form);
+                    }}
+                  />
+                </View>
+                <View style={styles.buttonWrapper}>
+                  <Button
+                    mode="contained"
+                    style={styles.btn_getStarted}
+                    onPress={() => openCardCollectionScreen()}
+                    color="green"
+                  >
+                    Add Card
+                  </Button>
+                </View>
               </View>
-
-              <TextInput
-                label="Name on the card"
-                mode="flat"
-                style={styles.card_holder}
-                outlineColor="green"
-                activeUnderlineColor="green"
-                placeholder="Card Holder"
-                keyboardType="number-pad"
-              />
-
-              <Button
-                mode="contained"
-                style={styles.btn_getStarted}
-                onPress={() => openCardCollectionScreen()}
-                color="green"
-              >
-                Add Card
-              </Button>
-            </View>
-          </>
-        }
-      />
+            </>
+          }
+        />
+      )}
     </View>
   );
 }
@@ -106,21 +145,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#ffff",
   },
-  second_row: {
-    flexDirection: "row",
-    marginTop: hp("5%"),
+  inputLabel: {
+    marginTop: hp("4%"),
   },
-  expiry_date: {
-    width: wp("30%"),
-  },
-  cvv: {
-    width: wp("30%"),
-    marginLeft: wp("20%"),
-  },
-  card_holder: {
-    marginTop: hp("5%"),
-  },
-  btn_getStarted: {
+  buttonWrapper: {
     marginTop: hp("5%"),
   },
 });
