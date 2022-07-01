@@ -8,6 +8,7 @@ import {
 } from "../actions/authActions";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { storeData } from "./localStorageService";
 
 /**
  * @desc SignUp User
@@ -36,6 +37,8 @@ export const signup = (payload) => async (dispatch) => {
       var userProfile = jwt_decode(user?.token);
       dispatch(setToken(user?.token));
       dispatch(updateCurrentUser(userProfile));
+      const jsonValue = JSON.stringify(userProfile);
+      dispatch(storeData("userProfile", jsonValue));
       return true;
     }
   } catch (error) {
@@ -71,6 +74,8 @@ export const login = (payload) => async (dispatch) => {
       var userProfile = jwt_decode(user?.token);
       dispatch(setToken(user?.token));
       dispatch(updateCurrentUser(userProfile));
+      const jsonValue = JSON.stringify(userProfile);
+      dispatch(storeData("userProfile", jsonValue));
       return true;
     }
   } catch (error) {

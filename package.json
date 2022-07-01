@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.15",
     "@react-navigation/native": "^5.9.8",
@@ -26,7 +27,6 @@
     "react-native-chart-kit": "^6.12.0",
     "react-native-confirmation-code-field": "^6.7.0",
     "react-native-credit-card-input-plus": "^0.4.3",
-    "react-native-credit-card-input-view": "^0.0.7",
     "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-paper": "^4.9.2",

@@ -14,25 +14,25 @@ export const addCardService = (payload, userId) => async (dispatch) => {
     dispatch(setCardLoader(true));
 
     if (isEmpty(userId)) {
-      dispatchAuthError("User is Required", dispatch);
+      dispatchCardError("User is Required", dispatch);
       return false;
     } else if (isEmpty(payload?.cardNumber)) {
-      dispatchAuthError("Card number is Required", dispatch);
+      dispatchCardError("Card number is Required", dispatch);
       return false;
     } else if (payload?.cardNumber?.length < 16) {
-      dispatchAuthError("Card number should be of atleast 16 digits", dispatch);
+      dispatchCardError("Card number should be of atleast 16 digits", dispatch);
       return false;
     } else if (isEmpty(payload?.cvv)) {
-      dispatchAuthError("Cvv is Required", dispatch);
+      dispatchCardError("Cvv is Required", dispatch);
       return false;
     } else if (isEmpty(payload?.expiry)) {
-      dispatchAuthError("Expiry is Required", dispatch);
+      dispatchCardError("Expiry is Required", dispatch);
       return false;
     } else if (isEmpty(payload?.name)) {
-      dispatchAuthError("Expiry is Required", dispatch);
+      dispatchCardError("Expiry is Required", dispatch);
       return false;
     } else if (isEmpty(payload?.type)) {
-      dispatchAuthError("Expiry is Required", dispatch);
+      dispatchCardError("Expiry is Required", dispatch);
       return false;
     }
 
@@ -44,7 +44,7 @@ export const addCardService = (payload, userId) => async (dispatch) => {
       return true;
     }
   } catch (error) {
-    dispatchAuthError(
+    dispatchCardError(
       getAPIErrorReason(error) || "Unable to add Card, please try again",
       dispatch
     );
@@ -54,6 +54,6 @@ export const addCardService = (payload, userId) => async (dispatch) => {
   }
 };
 
-function dispatchAuthError(msg, dispatch) {
+function dispatchCardError(msg, dispatch) {
   dispatch(setErrorMessage(msg));
 }
