@@ -56,7 +56,11 @@ export default function AddCardScreen({ navigation }) {
 
   const openCardCollectionScreen = async () => {
     const userProfile = await dispatch(getData("userProfile"));
-    let result = await dispatch(addCardService(addCard, userProfile?.userId));
+    let payload = JSON.parse(JSON.stringify(addCard));
+    if (payload?.type === "discover") {
+      payload.type = "rupay";
+    }
+    let result = await dispatch(addCardService(payload, userProfile?.userId));
     if (result) {
       await setModalVisible(false);
       navigation.push("CardCollectionScreen");
