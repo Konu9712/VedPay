@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 import { Text, View, StyleSheet, BackHandler } from "react-native";
@@ -15,6 +15,8 @@ import { addCardService } from "../../../services/cardService";
 import Loader from "../../../Components/Loader/Loader";
 import AlertMessage from "../../../Components/Alert/AlertMessage";
 import { isEmpty } from "../../../helper/commpn";
+import { getData } from "../../../services/localStorageService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddCardScreen({ navigation }) {
   const isFocused = useIsFocused();
@@ -23,12 +25,10 @@ export default function AddCardScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(true);
 
   const cardSelector = useSelector((state) => state.card);
-  const authSelector = useSelector((state) => state.auth);
   const alertSelecter = useSelector((state) => state.message);
 
   const { addCard, loading } = cardSelector;
   const { errorMessage } = alertSelecter;
-  const { currentUser } = authSelector;
 
   useEffect(() => {
     if (isFocused) {
@@ -55,17 +55,17 @@ export default function AddCardScreen({ navigation }) {
   );
 
   const openCardCollectionScreen = async () => {
-    let result = await dispatch(addCardService(addCard, currentUser?.userId));
+    const userProfile = await dispatch(getData("userProfile"));
+    let result = await dispatch(addCardService(addCard, userProfile?.userId));
     if (result) {
       await setModalVisible(false);
       navigation.push("CardCollectionScreen");
     }
   };
 
-  const eraseCardDetails = useCallback(() => {
+  const eraseCardDetails = () => {
     dispatch(addCardAction());
-    return;
-  }, []);
+  };
 
   return (
     <View>
@@ -77,7 +77,7 @@ export default function AddCardScreen({ navigation }) {
       ) : !isEmpty(errorMessage) ? (
         <>
           <AlertMessage />
-          {() => eraseCardDetails()}
+          {() => this.eraseCardDetails}
         </>
       ) : (
         <ModalConatiner
