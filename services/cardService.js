@@ -85,6 +85,31 @@ export const getCardList = (userId) => async (dispatch) => {
   }
 };
 
+/**
+ * @desc Delete Card
+ */
+export const deleteCardService = (userId, cardId) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    if (!userId || !cardId) return false;
+    dispatch(setCardLoader(true));
+
+    const response = await axios.delete(
+      `${VEDPAY_API}/api/card/${userId}/deleteCard/${cardId}`
+    );
+    if (response.data) return true;
+    return false;
+  } catch (e) {
+    dispatchCardError(
+      getAPIResponseError(e) || "Unable to delete card, please try again later",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setCardLoader(false));
+  }
+};
+
 function dispatchCardError(msg, dispatch) {
   console.log("msg", msg);
   dispatch(setErrorMessage(msg));
