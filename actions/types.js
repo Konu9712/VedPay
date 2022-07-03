@@ -7,6 +7,7 @@ export const SET_TOKEN = "SET_TOKEN";
 //Card actions
 export const SET_CARD_LOADER = "SET_CARD_LOADER";
 export const ADD_CARD = "ADD_CARD";
+export const SET_CARD_LIST = "SET_CARD_LIST";
 
 // Message
 export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";

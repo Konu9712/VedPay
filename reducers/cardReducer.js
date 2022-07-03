@@ -23,9 +23,20 @@ const addCardReducer = createReducerOrig(addCardintialState, (builder) => {
     return { ...cardDetails };
   });
 });
+
+const cardListIntialState = [];
+const setCardListReducer = createReducerOrig(cardListIntialState, (builder) => {
+  builder.addCase(Actions.SET_CARD_LIST, (state, action) => {
+    let cardList = [...state];
+    cardList = action.payload;
+    return [...cardList];
+  });
+});
+
 const cardReducer = combineReducers({
   addCard: addCardReducer,
   loading: cardLoaderReducer,
+  cardList: setCardListReducer,
 });
 
 export default cardReducer;

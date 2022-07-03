@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import {
-  Modal,
   StyleSheet,
   Text,
-  Pressable,
   View,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import { Button, Card, IconButton, Title } from "react-native-paper";
 import {
@@ -18,19 +17,38 @@ import MasterCardLogo from "../../../Components/Logo/MasterCardLogo";
 import RupayCardLogo from "../../../Components/Logo/RupayCardLogo";
 import VisaCardLogo from "../../../Components/Logo/VisaCardLogo";
 import ModalConatiner from "../../../Components/Modal/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { getCardList } from "../../../services/cardService";
+import { getData } from "../../../services/localStorageService";
+import { CARD_TYPE } from "../../../helper/constant";
 
 export default function CardCollectionScreen({ navigation }) {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState(true);
+
+  const cardSelector = useSelector((state) => state.card);
+  const alertSelecter = useSelector((state) => state.message);
+
+  const { cardList, loading } = cardSelector;
+  const { errorMessage } = alertSelecter;
+
   useEffect(() => {
     if (isFocused) {
+      loadData();
       setModalVisible(true);
     }
     return () => {
       setModalVisible(false);
     };
   }, [isFocused]);
+
+  const loadData = async () => {
+    const userProfile = await dispatch(getData("userProfile"));
+    const result = await dispatch(getCardList(userProfile?.userId));
+  };
+
   const openAddCardScreen = () => {
     navigation.navigate("AddCardScreen");
   };
@@ -38,6 +56,45 @@ export default function CardCollectionScreen({ navigation }) {
   const openCardTransactionListScreen = async () => {
     await setModalVisible(false);
     navigation.navigate("CardTransactionListScreen");
+  };
+
+  const renderCardList = ({ item, index }) => {
+    let colors = ["#685f87", "#654321", "#763568", "#abcdef", "#FF5A45"];
+    return (
+      <View key={`cardCollection + ${index}`}>
+        <Card
+          style={[
+            styles.card,
+            { backgroundColor: colors[index % colors.length] },
+          ]}
+          onPress={() => {
+            openCardTransactionListScreen();
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View style={styles.cardLogo}>
+              {item?.type === CARD_TYPE.MASTER ? (
+                <MasterCardLogo />
+              ) : item?.type === CARD_TYPE.VISA ? (
+                <VisaCardLogo />
+              ) : item?.type === CARD_TYPE.RUPAY ? (
+                <RupayCardLogo />
+              ) : (
+                <></>
+              )}
+              <Title style={styles.card_no}>
+                *****{String(item?.cardNumber).slice(-4)}
+              </Title>
+            </View>
+            <View style={styles.delete_icon}>
+              <TouchableOpacity onPress={() => console.log("Delete")}>
+                <IconButton icon="trash-can" size={25} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Card>
+      </View>
+    );
   };
 
   return (
@@ -55,48 +112,13 @@ export default function CardCollectionScreen({ navigation }) {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <View style={styles.cardWrapper}>
-                  <Card
-                    style={styles.card}
-                    onPress={() => {
-                      openCardTransactionListScreen();
-                    }}
-                  >
-                    <View style={{ flexDirection: "row" }}>
-                      <View style={styles.cardLogo}>
-                        <MasterCardLogo />
-                        <Title style={styles.card_no}>*****976</Title>
-                      </View>
-                      <View style={styles.delete_icon}>
-                        <TouchableOpacity onPress={() => console.log("Delete")}>
-                          <IconButton icon="trash-can" size={25} />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </Card>
-
-                  <Card style={styles.card2}>
-                    <View style={{ flexDirection: "row" }}>
-                      <View style={styles.cardLogo}>
-                        <VisaCardLogo />
-                        <Title style={styles.card_no}>*****654</Title>
-                      </View>
-                      <View style={styles.delete_icon}>
-                        <IconButton icon="trash-can" size={25} />
-                      </View>
-                    </View>
-                  </Card>
-
-                  <Card style={styles.card3}>
-                    <View style={{ flexDirection: "row" }}>
-                      <View style={styles.cardLogo}>
-                        <RupayCardLogo />
-                        <Title style={styles.card_no}>*****235</Title>
-                      </View>
-                      <View style={styles.delete_icon}>
-                        <IconButton icon="trash-can" size={25} />
-                      </View>
-                    </View>
-                  </Card>
+                  <>
+                    <FlatList
+                      data={cardList}
+                      renderItem={renderCardList}
+                      keyExtractor={(item) => item.cardId}
+                    />
+                  </>
                 </View>
 
                 <Button
@@ -141,17 +163,6 @@ const styles = StyleSheet.create({
   card: {
     height: hp("13%"),
     marginTop: hp("1%"),
-    backgroundColor: "#763568",
-  },
-  card2: {
-    height: hp("13%"),
-    marginTop: hp("1%"),
-    backgroundColor: "orange",
-  },
-  card3: {
-    height: hp("13%"),
-    marginTop: hp("1%"),
-    backgroundColor: "#009b7d",
   },
   card_no: {
     marginLeft: wp("5%"),
