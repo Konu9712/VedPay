@@ -18,7 +18,7 @@ import RupayCardLogo from "../../../Components/Logo/RupayCardLogo";
 import VisaCardLogo from "../../../Components/Logo/VisaCardLogo";
 import ModalConatiner from "../../../Components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { getCardList } from "../../../services/cardService";
+import { deleteCardService, getCardList } from "../../../services/cardService";
 import { getData } from "../../../services/localStorageService";
 import { CARD_TYPE } from "../../../helper/constant";
 
@@ -33,7 +33,6 @@ export default function CardCollectionScreen({ navigation }) {
 
   const { cardList, loading } = cardSelector;
   const { errorMessage } = alertSelecter;
-
   useEffect(() => {
     if (isFocused) {
       loadData();
@@ -56,6 +55,16 @@ export default function CardCollectionScreen({ navigation }) {
   const openCardTransactionListScreen = async () => {
     await setModalVisible(false);
     navigation.navigate("CardTransactionListScreen");
+  };
+
+  const deleteCard = async (card) => {
+    const userProfile = await dispatch(getData("userProfile"));
+    const result = await dispatch(
+      deleteCardService(userProfile?.userId, card?.cardId)
+    );
+    if (result) {
+      loadData();
+    }
   };
 
   const renderCardList = ({ item, index }) => {
@@ -87,7 +96,7 @@ export default function CardCollectionScreen({ navigation }) {
               </Title>
             </View>
             <View style={styles.delete_icon}>
-              <TouchableOpacity onPress={() => console.log("Delete")}>
+              <TouchableOpacity onPress={() => deleteCard(item)}>
                 <IconButton icon="trash-can" size={25} />
               </TouchableOpacity>
             </View>
@@ -126,6 +135,7 @@ export default function CardCollectionScreen({ navigation }) {
                   style={styles.btn_getStarted}
                   onPress={() => openAddCardScreen()}
                   color="green"
+                  disabled={cardList?.length === 3}
                 >
                   + Add Card
                 </Button>
