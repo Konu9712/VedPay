@@ -21,6 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCardService, getCardList } from "../../../services/cardService";
 import { getData } from "../../../services/localStorageService";
 import { CARD_TYPE } from "../../../helper/constant";
+import AlertMessage from "../../../Components/Alert/AlertMessage";
+import { isEmpty } from "../../../helper/commpn";
+import Loader from "../../../Components/Loader/Loader";
+import EmptyCardCollectionScreen from "./EmptyCardCollectionScreen";
 
 export default function CardCollectionScreen({ navigation }) {
   const isFocused = useIsFocused();
@@ -68,7 +72,7 @@ export default function CardCollectionScreen({ navigation }) {
   };
 
   const renderCardList = ({ item, index }) => {
-    let colors = ["#685f87", "#654321", "#763568", "#abcdef", "#FF5A45"];
+    let colors = ["#685f87", "#654321", "#763568", "#aa6f73", "#004c4c"];
     return (
       <View key={`cardCollection + ${index}`}>
         <Card
@@ -111,39 +115,52 @@ export default function CardCollectionScreen({ navigation }) {
       <View style={styles.text_container}>
         <Text style={styles.desc_1}>My Cards</Text>
       </View>
+      {loading ? (
+        <Loader />
+      ) : !isEmpty(errorMessage) ? (
+        <>
+          <AlertMessage />
+        </>
+      ) : (
+        <ModalConatiner
+          ismodalOpen={modalVisible}
+          modalHeight={70}
+          navigation={navigation}
+          bulkProps={
+            <>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <View style={styles.cardWrapper}>
+                    {isEmpty(cardList) ? (
+                      <>
+                        <View style={styles.emptyStateContainer}>
+                          <EmptyCardCollectionScreen />
+                        </View>
+                      </>
+                    ) : (
+                      <FlatList
+                        data={cardList}
+                        renderItem={renderCardList}
+                        keyExtractor={(item) => item.cardId}
+                      />
+                    )}
+                  </View>
 
-      <ModalConatiner
-        ismodalOpen={modalVisible}
-        modalHeight={70}
-        navigation={navigation}
-        bulkProps={
-          <>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View style={styles.cardWrapper}>
-                  <>
-                    <FlatList
-                      data={cardList}
-                      renderItem={renderCardList}
-                      keyExtractor={(item) => item.cardId}
-                    />
-                  </>
+                  <Button
+                    mode="contained"
+                    style={styles.btn_getStarted}
+                    onPress={() => openAddCardScreen()}
+                    color="green"
+                    disabled={cardList?.length === 3}
+                  >
+                    + Add Card
+                  </Button>
                 </View>
-
-                <Button
-                  mode="contained"
-                  style={styles.btn_getStarted}
-                  onPress={() => openAddCardScreen()}
-                  color="green"
-                  disabled={cardList?.length === 3}
-                >
-                  + Add Card
-                </Button>
               </View>
-            </View>
-          </>
-        }
-      />
+            </>
+          }
+        />
+      )}
     </View>
   );
 }
@@ -169,6 +186,9 @@ const styles = StyleSheet.create({
   },
   cardLogo: {
     marginTop: hp("1.2%"),
+  },
+  emptyStateContainer: {
+    height: hp("50%"),
   },
   card: {
     height: hp("13%"),

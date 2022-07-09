@@ -4,6 +4,7 @@ import { VEDPAY_API, STAGING_API } from "@env";
 import {
   setAuthLoader,
   setToken,
+  setTotalBalance,
   updateCurrentUser,
 } from "../actions/authActions";
 import jwt_decode from "jwt-decode";
@@ -81,6 +82,38 @@ export const login = (payload) => async (dispatch) => {
   } catch (error) {
     dispatchAuthError(
       getAPIErrorReason(error) || "Unable to LogIn, please try again",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setAuthLoader(false));
+  }
+};
+
+/**
+ * @desc Get Total Balance
+ */
+export const getTotalBalance = (userId) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    if (!userId) return false;
+    dispatch(setAuthLoader(true));
+
+    if (isEmpty(userId)) {
+      dispatchCardError("User is Required", dispatch);
+      return false;
+    }
+    const response = await axios.get(
+      `${VEDPAY_API}/api/auth/${userId}/totalBalance`
+    );
+    if (response?.data) {
+      dispatch(setTotalBalance(response?.data?.totalBalance));
+      return true;
+    }
+  } catch (error) {
+    dispatchAuthError(
+      getAPIErrorReason(error) ||
+        "Unable to fetch Total Balance, please try again",
       dispatch
     );
     return false;

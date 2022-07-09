@@ -6,47 +6,97 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useDispatch, useSelector } from "react-redux";
+import AlertMessage from "../../../Components/Alert/AlertMessage";
+import Loader from "../../../Components/Loader/Loader";
 import ModalConatiner from "../../../Components/Modal/Modal";
+import { isEmpty } from "../../../helper/commpn";
+import { getTotalBalance } from "../../../services/authService";
+import { getData } from "../../../services/localStorageService";
 
 export default function AddMoneySuccessfully({ navigation }) {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState(true);
+
+  const authSelector = useSelector((state) => state.auth);
+  const transactionSelector = useSelector((state) => state.transaction);
+  const cardSelector = useSelector((state) => state.card);
+  const alertSelecter = useSelector((state) => state.message);
+
+  const { totalBalance } = authSelector;
+  const { transactionDetail, loading } = transactionSelector;
+  const { cardList } = cardSelector;
+  const { errorMessage } = alertSelecter;
   useEffect(() => {
     if (isFocused) {
       setModalVisible(true);
+      loadData();
     }
     return () => {
       setModalVisible(false);
     };
   }, [isFocused]);
 
+  const loadData = async () => {
+    const userProfile = await dispatch(getData("userProfile"));
+    const result = await dispatch(getTotalBalance(userProfile?.userId));
+  };
+
+  const sourceOfTransaction = () => {
+    const sourceCard = cardList.find(
+      (x) => x.cardId === transactionDetail?.from
+    );
+    const sourceCardNumber = String(sourceCard?.cardNumber);
+    const lastFourDigit = sourceCardNumber?.slice(sourceCardNumber.length - 4);
+    return `********${lastFourDigit}`;
+  };
+
+  sourceOfTransaction();
+
   return (
     <View>
       <View style={styles.amout_wrapper}>
-        <Text style={styles.currency}>Rs</Text>
-        <Text style={styles.ammount}>1575 </Text>
+        <Text style={styles.currency}>₹</Text>
+        <Text style={styles.ammount}>{totalBalance} </Text>
       </View>
-      <View>
-        <ModalConatiner
-          ismodalOpen={modalVisible}
-          modalHeight={70}
-          navigation={navigation}
-          onBackPushToMain={true}
-          bulkProps={
-            <>
-              <View>
-                <Text>From: ********56 </Text>
-                <Text>Transaction ID: 786433589067 </Text>
-                <View style={styles.modalAmount_Wrapper}>
-                  <Text style={styles.addedamount}>Rs. 56 </Text>
-                  <IconButton icon="check-decagram" color={"green"} size={30} />
+      {loading ? (
+        <Loader />
+      ) : !isEmpty(errorMessage) ? (
+        <>
+          <AlertMessage />
+        </>
+      ) : (
+        <View>
+          <ModalConatiner
+            ismodalOpen={modalVisible}
+            modalHeight={70}
+            navigation={navigation}
+            onBackPushToMain={true}
+            bulkProps={
+              <>
+                <View>
+                  <Text>From: {sourceOfTransaction()} </Text>
+                  <Text>
+                    Transaction ID: {transactionDetail?.transactionID}{" "}
+                  </Text>
+                  <View style={styles.modalAmount_Wrapper}>
+                    <Text style={styles.addedamount}>
+                      ₹ {transactionDetail?.amount}{" "}
+                    </Text>
+                    <IconButton
+                      icon="check-decagram"
+                      color={"green"}
+                      size={30}
+                    />
+                  </View>
                 </View>
-              </View>
-            </>
-          }
-        />
-      </View>
+              </>
+            }
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -62,7 +112,7 @@ const styles = StyleSheet.create({
   },
   currency: {
     fontWeight: "bold",
-    fontSize: hp("3%"),
+    fontSize: hp("4%"),
     color: "#ffff",
   },
   ammount: {

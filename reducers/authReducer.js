@@ -31,10 +31,16 @@ const tokenReducer = createReducer({
   actionType: Actions.SET_TOKEN,
 });
 
+const totalBalanceReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_TOTAL_BALANCE,
+});
+
 const authReducer = combineReducers({
   loading: authLoaderReducer,
   currentUser: currentUserReducer,
   token: tokenReducer,
+  totalBalance: totalBalanceReducer,
 });
 
 export default authReducer;
