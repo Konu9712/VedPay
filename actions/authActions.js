@@ -17,6 +17,10 @@ export const updateCurrentUser = createAction(Actions.UPDATE_CURRENT_USER);
  * @desc set Token
  */
 export const setToken = createAction(Actions.SET_TOKEN);
+/**
+ * @desc set Total Balance
+ */
+export const setTotalBalance = createAction(Actions.SET_TOTAL_BALANCE);
 // /**
 //  * @desc Set Auth Loader
 //  */
