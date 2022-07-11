@@ -21,6 +21,14 @@ export const setToken = createAction(Actions.SET_TOKEN);
  * @desc set Total Balance
  */
 export const setTotalBalance = createAction(Actions.SET_TOTAL_BALANCE);
+/**
+ * @desc set Users Contact List
+ */
+export const setContacts = createAction(Actions.SET_CONTACTS);
+/**
+ * @desc set Vedpay Valid Users
+ */
+export const setVedPayUsers = createAction(Actions.SET_VEDPAY_USERS);
 // /**
 //  * @desc Set Auth Loader
 //  */

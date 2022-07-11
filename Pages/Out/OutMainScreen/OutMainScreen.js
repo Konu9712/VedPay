@@ -8,21 +8,43 @@ import {
 } from "react-native-responsive-screen";
 import ModalConatiner from "../../../Components/Modal/Modal";
 import { useIsFocused } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { setContacts } from "../../../actions/authActions";
+import { getData } from "../../../services/localStorageService";
+import { getTotalBalance } from "../../../services/authService";
+import Loader from "../../../Components/Loader/Loader";
+import { isEmpty } from "../../../helper/commpn";
+import AlertMessage from "../../../Components/Alert/AlertMessage";
+import EmptyContactState from "./EmptyContactState";
 
 export default function OutMainScreen({ navigation }) {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
-  const [contacts, setContacts] = useState([]);
   const [modalVisible, setModalVisible] = useState(true);
+
+  const authSelector = useSelector((state) => state.auth);
+
+  const alertSelecter = useSelector((state) => state.message);
+
+  const { vedPayUsers, totalBalance, loading } = authSelector;
+  const { errorMessage } = alertSelecter;
+
   useEffect(() => {
     if (isFocused) {
       setModalVisible(true);
       loadContacts();
+      loadData();
     }
     return () => {
       setModalVisible(false);
     };
   }, [isFocused]);
+
+  const loadData = async () => {
+    const userProfile = await dispatch(getData("userProfile"));
+    const result = await dispatch(getTotalBalance(userProfile?.userId));
+  };
 
   const loadContacts = useCallback(async () => {
     const { status } = await Contacts.requestPermissionsAsync();
@@ -31,24 +53,18 @@ export default function OutMainScreen({ navigation }) {
         fields: [Contacts.Fields.PhoneNumbers],
       });
       if (data.length > 0) {
-        setContacts(data);
+        dispatch(setContacts(data));
       }
     } else navigation.navigate("Main");
   }, []);
 
-  const openOutContactChatScreen = () => {
-    navigation.navigate("OutContactChatScreen");
+  const openOutContactChatScreen = (item) => {
+    // navigation.navigate("OutContactChatScreen");
   };
 
   const renderContacts = ({ item, index }) => {
     const avatarInitial = item?.name?.substring(0, 2);
-    let phoneNumber = item?.phoneNumbers?.number;
-    if (
-      typeof item?.phoneNumbers == "object" &&
-      item?.phoneNumbers[0]?.number
-    ) {
-      phoneNumber = item?.phoneNumbers[0]?.number;
-    }
+    let phoneNumber = item?.phoneNumber;
 
     return (
       <>
@@ -57,7 +73,7 @@ export default function OutMainScreen({ navigation }) {
             rippleColor="rgba(0, 0, 0, .32)"
             style={styles.rippleContainer}
             borderless={true}
-            onPress={() => openOutContactChatScreen()}
+            onPress={() => openOutContactChatScreen(phoneNumber)}
           >
             <View style={styles.contactContainer}>
               <Avatar.Text size={50} label={avatarInitial} />
@@ -81,21 +97,41 @@ export default function OutMainScreen({ navigation }) {
   return (
     <View>
       <View style={styles.amout_wrapper}>
-        <Text style={styles.currency}>Rs</Text>
-        <Text style={styles.ammount}>1572 </Text>
+        <Text style={styles.currency}>₹</Text>
+        <Text style={styles.ammount}>{totalBalance} </Text>
       </View>
-      <View style={styles.modalContainer}>
-        <ModalConatiner
-          ismodalOpen={modalVisible}
-          modalHeight={90}
-          navigation={navigation}
-          bulkProps={
-            <>
-              <FlatList data={contacts} renderItem={renderContacts} />
-            </>
-          }
-        />
-      </View>
+      {loading ? (
+        <Loader />
+      ) : !isEmpty(errorMessage) ? (
+        <>
+          <AlertMessage />
+        </>
+      ) : (
+        <View style={styles.modalContainer}>
+          <ModalConatiner
+            ismodalOpen={modalVisible}
+            modalHeight={90}
+            navigation={navigation}
+            bulkProps={
+              <View>
+                {isEmpty(vedPayUsers) ? (
+                  <>
+                    <View style={styles.emptyStateContainer}>
+                      <EmptyContactState />
+                    </View>
+                  </>
+                ) : (
+                  <FlatList
+                    data={vedPayUsers}
+                    renderItem={renderContacts}
+                    keyExtractor={(item, index) => index.toString()}
+                  />
+                )}
+              </View>
+            }
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -110,7 +146,7 @@ const styles = StyleSheet.create({
   },
   currency: {
     fontWeight: "bold",
-    fontSize: hp("3%"),
+    fontSize: hp("4%"),
     color: "#ffff",
   },
   ammount: {
@@ -136,5 +172,8 @@ const styles = StyleSheet.create({
   share_Icon: {
     flex: 1,
     alignItems: "flex-end",
+  },
+  emptyStateContainer: {
+    height: hp("50%"),
   },
 });
