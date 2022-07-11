@@ -6,9 +6,13 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
+import { setContacts } from "../../actions/authActions";
+import { getVedpayUsers } from "../../services/authService";
+import { getData } from "../../services/localStorageService";
 
 export default function SplashScreen({ navigation }) {
-  const [contacts, setContacts] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     loadContacts();
@@ -21,7 +25,7 @@ export default function SplashScreen({ navigation }) {
         fields: [Contacts.Fields.PhoneNumbers],
       });
       if (data.length > 0) {
-        setContacts(data); //Store the contacts in the reducer
+        await dispatch(setContacts(data));
       }
     }
   }, []);

@@ -11,6 +11,7 @@ const d = Dimensions.get("window");
 export default function Naviagation() {
   const authSelector = useSelector((state) => state.auth);
   const { token } = authSelector;
+  // let token = true;
   const [qr, setQR] = useState(true);
 
   const MyTheme = {

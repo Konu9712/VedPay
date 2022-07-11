@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
 import {
@@ -6,8 +6,28 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { ProgressChart } from "react-native-chart-kit";
+import { useDispatch, useSelector } from "react-redux";
+import { getData } from "../../services/localStorageService";
+import { getVedpayUsers } from "../../services/authService";
 
 export default function MainScreen({ navigation }) {
+  const dispatch = useDispatch();
+
+  const authSelector = useSelector((state) => state.auth);
+
+  const { allContacts } = authSelector;
+
+  useEffect(() => {
+    loadVedpayUsers();
+  }, []);
+
+  const loadVedpayUsers = async () => {
+    const userProfile = await dispatch(getData("userProfile"));
+    const result = await dispatch(
+      getVedpayUsers(userProfile?.userId, allContacts)
+    );
+  };
+
   const openCardCollectionScreen = () => {
     navigation.navigate("Card", { screen: "CardCollectionScreen" });
   };

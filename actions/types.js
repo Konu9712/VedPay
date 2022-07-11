@@ -4,6 +4,8 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 export const SET_TOKEN = "SET_TOKEN";
 export const SET_TOTAL_BALANCE = "SET_TOTAL_BALANCE";
+export const SET_CONTACTS = "SET_CONTACTS";
+export const SET_VEDPAY_USERS = "SET_VEDPAY_USERS";
 
 //Card actions
 export const SET_CARD_LOADER = "SET_CARD_LOADER";

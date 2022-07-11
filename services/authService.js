@@ -5,6 +5,7 @@ import {
   setAuthLoader,
   setToken,
   setTotalBalance,
+  setVedPayUsers,
   updateCurrentUser,
 } from "../actions/authActions";
 import jwt_decode from "jwt-decode";
@@ -114,6 +115,42 @@ export const getTotalBalance = (userId) => async (dispatch) => {
     dispatchAuthError(
       getAPIErrorReason(error) ||
         "Unable to fetch Total Balance, please try again",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setAuthLoader(false));
+  }
+};
+
+/**
+ * @desc LogIn User
+ */
+export const getVedpayUsers = (userId, payload) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    if (!userId) return false;
+    dispatch(setAuthLoader(true));
+    if (isEmpty(payload)) {
+      dispatchAuthError("Phone Number is Required", dispatch);
+      return false;
+    } else if (isEmpty(userId)) {
+      dispatchAuthError("User is Required", dispatch);
+      return false;
+    }
+
+    const response = await axios.post(
+      `${VEDPAY_API}/api/contact/${userId}/allUserContact`,
+      payload
+    );
+    if (response?.data) {
+      dispatch(setVedPayUsers(response?.data?.users?.validUsers));
+      return true;
+    }
+  } catch (error) {
+    dispatchAuthError(
+      getAPIErrorReason(error) ||
+        "Unable to fetch VedPay Users, please try again",
       dispatch
     );
     return false;
