@@ -3,6 +3,7 @@ import authReducer from "./authReducer";
 import cardReducer from "./cardReducer";
 import inReducer from "./inReducer";
 import messageReducer from "./messageReducer";
+import outReducer from "./outReducer";
 import transactionReducer from "./transactionReducer";
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   inReducer: inReducer,
   message: messageReducer,
   transaction: transactionReducer,
+  outReducer: outReducer,
 });
 
 export default rootReducer;

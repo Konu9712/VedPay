@@ -1,6 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
+import moment from "moment";
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput, FlatList } from "react-native";
 import {
   Avatar,
   Button,
@@ -12,31 +13,142 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useDispatch, useSelector } from "react-redux";
+import AlertMessage from "../../../Components/Alert/AlertMessage";
 import Divider from "../../../Components/Divider/Divider";
+import Loader from "../../../Components/Loader/Loader";
 import ModalConatiner from "../../../Components/Modal/Modal";
+import { isEmpty } from "../../../helper/commpn";
+import { getData } from "../../../services/localStorageService";
+import { getContactTransactionHistory } from "../../../services/transactionService";
 
 export default function OutContactChatScreen({ navigation }) {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState(true);
+  const [user, setUser] = useState();
+
+  const alertSelecter = useSelector((state) => state.message);
+  const outSelecter = useSelector((state) => state.outReducer);
+  const transactionSelecter = useSelector((state) => state.transaction);
+
+  const { selectedContact, loading: outLoader } = outSelecter;
+  const { contactTransaction, loading: historyLoader } = transactionSelecter;
+  const loading = outLoader || historyLoader;
+
+  const { errorMessage } = alertSelecter;
+
   useEffect(() => {
     if (isFocused) {
       setModalVisible(true);
+      loadHistory();
     }
     return () => {
       setModalVisible(false);
     };
   }, [isFocused]);
 
+  const loadHistory = async () => {
+    const userProfile = await dispatch(getData("userProfile"));
+    setUser(userProfile);
+    if (userProfile && selectedContact) {
+      const result = await dispatch(
+        getContactTransactionHistory(
+          userProfile?.userId,
+          selectedContact?.phoneNumber
+        )
+      );
+    }
+  };
+
   const openOutPayScreen = () => {
     navigation.navigate("OutPayScreen");
+  };
+
+  const renderHistory = ({ item, index }) => {
+    return (
+      <>
+        {user?.userId === item?.to ? (
+          <>
+            <Card style={[styles.reciverCard, styles.card]}>
+              <View style={styles.reciverCardContent}>
+                <View style={styles.reciverBar} />
+                <View>
+                  {item?.status === "successful" ? (
+                    <>
+                      <IconButton
+                        icon="check-decagram"
+                        color={"green"}
+                        size={40}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <IconButton icon="exclamation" color={"red"} size={40} />
+                    </>
+                  )}
+                </View>
+                <View>
+                  <Text style={styles.amount}>Rs {item?.amount}</Text>
+                  <Divider />
+                  <Text>
+                    {moment(item?.createdAt).format("DD MMM YYYY HH:MM A ")}
+                  </Text>
+                </View>
+              </View>
+            </Card>
+          </>
+        ) : user?.userId === item?.from ? (
+          <>
+            <Card style={[styles.senderCard, styles.card]}>
+              <View style={styles.senderCardContent}>
+                <View style={styles.senderDetails}>
+                  <Text style={styles.amount}>Rs {item?.amount}</Text>
+                  <Divider />
+                  <Text>
+                    {moment(item?.createdAt).format("DD MMM YYYY HH:MM A ")}
+                  </Text>
+                </View>
+                <View>
+                  {item?.status === "successful" ? (
+                    <>
+                      <IconButton
+                        icon="check-decagram"
+                        color={"green"}
+                        size={40}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <IconButton icon="exclamation" color={"red"} size={40} />
+                    </>
+                  )}
+                </View>
+                <View style={styles.senderBar} />
+              </View>
+            </Card>
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+    );
   };
 
   return (
     <View>
       <View style={styles.contact_Container}>
-        <Avatar.Text size={50} label={"TT"} style={styles.contactAvatar} />
-        <Text style={styles.contactName}>Tirth VIT </Text>
+        <Avatar.Text
+          size={50}
+          label={
+            selectedContact?.name
+              ? selectedContact?.name?.substring(0, 2)
+              : "Vp"
+          }
+          style={styles.contactAvatar}
+        />
+        <Text style={styles.contactName}>{selectedContact?.name}</Text>
       </View>
 
       <View style={styles.modal_wrapper}>
@@ -46,40 +158,24 @@ export default function OutContactChatScreen({ navigation }) {
           navigation={navigation}
           bulkProps={
             <>
-              <View style={styles.modalContainer}>
-                <Card style={[styles.reciverCard, styles.card]}>
-                  <View style={styles.reciverCardContent}>
-                    <View style={styles.reciverBar} />
-                    <View>
-                      <IconButton
-                        icon="check-decagram"
-                        color={"green"}
-                        size={40}
-                      />
-                    </View>
-                    <View>
-                      <Text style={styles.amount}>Rs 170</Text>
-                      <Divider />
-                      <Text>24 Dec 2022 7:40 PM</Text>
-                    </View>
-                  </View>
-                </Card>
+              {loading ? (
+                <View style={styles.loadinContainer}>
+                  <Loader />
+                </View>
+              ) : !isEmpty(errorMessage) ? (
+                <>
+                  <AlertMessage />
+                </>
+              ) : (
+                <View style={styles.modalContainer}>
+                  <FlatList
+                    horizontal={false}
+                    data={contactTransaction}
+                    renderItem={renderHistory}
+                    keyExtractor={(item, index) => index.toString()}
+                  />
 
-                <Card style={[styles.senderCard, styles.card]}>
-                  <View style={styles.senderCardContent}>
-                    <View style={styles.senderDetails}>
-                      <Text style={styles.amount}>Rs 680</Text>
-                      <Divider />
-                      <Text>6 Aug 2022 9:32 PM</Text>
-                    </View>
-                    <View>
-                      <IconButton icon="exclamation" color={"red"} size={40} />
-                    </View>
-                    <View style={styles.senderBar} />
-                  </View>
-                </Card>
-
-                <Card style={styles.card}>
+                  {/* <Card style={styles.card}>
                   <View style={styles.reciverTextContainer}>
                     <View style={styles.textreciverBar} />
                     <Paragraph style={styles.reciverText}>
@@ -93,26 +189,30 @@ export default function OutContactChatScreen({ navigation }) {
                     <Paragraph style={styles.senderText}>I am good</Paragraph>
                     <View style={styles.textsenderBar} />
                   </View>
-                </Card>
+                </Card> */}
 
-                <View style={styles.inputChatContainer}>
-                  <Button
-                    mode="contained"
-                    style={styles.pay_btn}
-                    onPress={() => openOutPayScreen()}
-                    color="green"
-                  >
-                    Pay
-                  </Button>
-                  <TextInput style={styles.chatInput} placeholder="Miss me ?" />
-                  <IconButton
-                    icon="console-line"
-                    size={20}
-                    onPress={() => console.log("Pressed")}
-                    style={styles.send_Icon}
-                  />
+                  <View style={styles.inputChatContainer}>
+                    <Button
+                      mode="contained"
+                      style={styles.pay_btn}
+                      onPress={() => openOutPayScreen()}
+                      color="green"
+                    >
+                      Pay
+                    </Button>
+                    <TextInput
+                      style={styles.chatInput}
+                      placeholder="Miss me ?"
+                    />
+                    <IconButton
+                      icon="console-line"
+                      size={20}
+                      onPress={() => console.log("Pressed")}
+                      style={styles.send_Icon}
+                    />
+                  </View>
                 </View>
-              </View>
+              )}
             </>
           }
         />
@@ -139,6 +239,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
+    paddingBottom: hp("20%"),
   },
   card: {
     marginTop: hp("2%"),
@@ -209,5 +310,9 @@ const styles = StyleSheet.create({
   },
   send_Icon: {
     height: 20,
+  },
+  loadinContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

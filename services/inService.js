@@ -9,7 +9,7 @@ import {
 } from "../actions/transactionActions";
 
 /**
- * @desc Add Card
+ * @desc Add Money
  */
 export const addMoney = (userId, cardId, payload) => async (dispatch) => {
   try {

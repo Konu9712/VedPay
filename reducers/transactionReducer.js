@@ -13,9 +13,15 @@ const transactionDetailReducer = createReducer({
   actionType: Actions.SET_TRANSACTION_DETAILS,
 });
 
+const contactTransactionReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_CONTACT_TRANSACTION,
+});
+
 const transactionReducer = combineReducers({
   loading: transactionLoaderReducer,
   transactionDetail: transactionDetailReducer,
+  contactTransaction: contactTransactionReducer,
 });
 
 export default transactionReducer;
