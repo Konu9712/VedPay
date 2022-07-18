@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { createReducer as createReducerOrig } from "@reduxjs/toolkit";
 import { createReducer } from "../helper/reduxHelper";
 import * as Actions from "./../actions/types";
+import { getData } from "../services/localStorageService";
 
 const authLoaderReducer = createReducer({
   initialState: false,

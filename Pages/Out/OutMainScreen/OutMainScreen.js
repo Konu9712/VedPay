@@ -16,6 +16,7 @@ import Loader from "../../../Components/Loader/Loader";
 import { isEmpty } from "../../../helper/commpn";
 import AlertMessage from "../../../Components/Alert/AlertMessage";
 import EmptyContactState from "./EmptyContactState";
+import { setSelectedContact } from "../../../actions/outActions";
 
 export default function OutMainScreen({ navigation }) {
   const isFocused = useIsFocused();
@@ -59,7 +60,10 @@ export default function OutMainScreen({ navigation }) {
   }, []);
 
   const openOutContactChatScreen = (item) => {
-    // navigation.navigate("OutContactChatScreen");
+    if (item) {
+      dispatch(setSelectedContact(item));
+      navigation.navigate("OutContactChatScreen");
+    }
   };
 
   const renderContacts = ({ item, index }) => {
@@ -73,7 +77,7 @@ export default function OutMainScreen({ navigation }) {
             rippleColor="rgba(0, 0, 0, .32)"
             style={styles.rippleContainer}
             borderless={true}
-            onPress={() => openOutContactChatScreen(phoneNumber)}
+            onPress={() => openOutContactChatScreen(item)}
           >
             <View style={styles.contactContainer}>
               <Avatar.Text size={50} label={avatarInitial} />
