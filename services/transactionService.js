@@ -4,6 +4,7 @@ import { clearErrorMessage, setErrorMessage } from "../actions/messageActions";
 import { getAPIErrorReason, isEmpty } from "../helper/commpn";
 import {
   setContactTransaction,
+  setGlobalTransaction,
   setTransactionLoader,
 } from "../actions/transactionActions";
 
@@ -39,6 +40,38 @@ export const getContactTransactionHistory =
     }
   };
 
+/**
+ * @desc Get global Hstory transaction
+ */
+export const getGlobalTransactionHistory = (userId) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    if (!userId) return false;
+    dispatch(setTransactionLoader(true));
+
+    if (isEmpty(userId)) {
+      dispatchTransactionError("User is Required", dispatch);
+      return false;
+    }
+    const response = await axios.get(
+      `${VEDPAY_API}/api/transaction/${userId}/global`
+    );
+    if (response?.data) {
+      dispatch(setGlobalTransaction(response?.data?.transactionHistory));
+      return true;
+    }
+  } catch (error) {
+    dispatchTransactionError(
+      getAPIErrorReason(error) || "Unable to fetch History, please try again",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setTransactionLoader(false));
+  }
+};
+
 function dispatchTransactionError(msg, dispatch) {
+  console.log("msg", msg);
   dispatch(setErrorMessage(msg));
 }

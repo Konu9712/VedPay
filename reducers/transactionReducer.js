@@ -18,10 +18,16 @@ const contactTransactionReducer = createReducer({
   actionType: Actions.SET_CONTACT_TRANSACTION,
 });
 
+const globalTransactionReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_GLOBAL_TRANSACTION,
+});
+
 const transactionReducer = combineReducers({
   loading: transactionLoaderReducer,
   transactionDetail: transactionDetailReducer,
   contactTransaction: contactTransactionReducer,
+  globalTransaction: globalTransactionReducer,
 });
 
 export default transactionReducer;

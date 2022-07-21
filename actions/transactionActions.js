@@ -20,6 +20,12 @@ export const setTransactionDetails = createAction(
 export const setContactTransaction = createAction(
   Actions.SET_CONTACT_TRANSACTION
 );
+/**
+ * @desc Set Global Transaction
+ */
+export const setGlobalTransaction = createAction(
+  Actions.SET_GLOBAL_TRANSACTION
+);
 
 export const clearInData = () => (dispatch) => {
   //   dispatch(setCurrentUser(null));
