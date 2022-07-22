@@ -38,11 +38,17 @@ const selectedCardReducer = createReducer({
   actionType: Actions.SET_SELECTED_CARD,
 });
 
+const cardStatsReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_CARD_STATS,
+});
+
 const cardReducer = combineReducers({
   addCard: addCardReducer,
   loading: cardLoaderReducer,
   cardList: setCardListReducer,
   selectedCard: selectedCardReducer,
+  cardStats: cardStatsReducer,
 });
 
 export default cardReducer;

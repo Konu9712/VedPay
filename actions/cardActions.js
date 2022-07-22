@@ -18,6 +18,10 @@ export const setCardList = createAction(Actions.SET_CARD_LIST);
  * @desc Set Selected Card
  */
 export const setSelectedCard = createAction(Actions.SET_SELECTED_CARD);
+/**
+ * @desc Set Card Stats
+ */
+export const setCardStats = createAction(Actions.SET_CARD_STATS);
 
 export const clearCardData = () => (dispatch) => {
   //   dispatch(setCurrentUser(null));

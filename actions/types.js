@@ -12,6 +12,7 @@ export const SET_CARD_LOADER = "SET_CARD_LOADER";
 export const ADD_CARD = "ADD_CARD";
 export const SET_CARD_LIST = "SET_CARD_LIST";
 export const SET_SELECTED_CARD = "SET_SELECTED_CARD";
+export const SET_CARD_STATS = "SET_CARD_STATS";
 
 // In actions
 export const SET_IN_LOADER = "SET_IN_LOADER";

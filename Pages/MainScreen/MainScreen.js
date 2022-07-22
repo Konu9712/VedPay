@@ -9,13 +9,17 @@ import { ProgressChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { getData } from "../../services/localStorageService";
 import { getVedpayUsers } from "../../services/authService";
+import { getCardStats } from "../../services/cardService";
+import EmptyState from "../../Components/Logo/EmptyState";
 
 export default function MainScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const authSelector = useSelector((state) => state.auth);
+  const cardSelector = useSelector((state) => state.card);
 
   const { allContacts } = authSelector;
+  const { cardStats } = cardSelector;
 
   useEffect(() => {
     loadVedpayUsers();
@@ -26,6 +30,7 @@ export default function MainScreen({ navigation }) {
     const result = await dispatch(
       getVedpayUsers(userProfile?.userId, allContacts)
     );
+    const cardStats = await dispatch(getCardStats(userProfile?.userId));
   };
 
   const openCardCollectionScreen = () => {
@@ -36,10 +41,6 @@ export default function MainScreen({ navigation }) {
     navigation.navigate("HistoryMainScreen");
   };
 
-  const data = {
-    labels: ["SBI", "Axis", "ICIC"], // optional
-    data: [0.4, 0.6, 0.8],
-  };
   const chartConfig = {
     backgroundGradientFrom: "#ffff",
     backgroundGradientTo: "#fff",
@@ -56,16 +57,31 @@ export default function MainScreen({ navigation }) {
     <View>
       <View style={styles.mainChartWrapper}>
         <Card style={styles.progressChartCard}>
-          <ProgressChart
-            style={styles.progesBar}
-            data={data}
-            width={wp("90%")}
-            height={hp("30%")}
-            strokeWidth={16}
-            radius={32}
-            chartConfig={chartConfig}
-            hideLegend={false}
-          />
+          {cardStats?.data?.length !== 0 ? (
+            <ProgressChart
+              style={styles.progesBar}
+              data={cardStats}
+              width={wp("90%")}
+              height={hp("30%")}
+              strokeWidth={16}
+              radius={32}
+              chartConfig={chartConfig}
+              hideLegend={false}
+            />
+          ) : (
+            <>
+              <View>
+                <View style={styles.emptyStateWrapper}>
+                  <View style={styles.imageWrapper}>
+                    <EmptyState height={10} />
+                  </View>
+                  <Text style={styles.emptyText}>
+                    No card transaactions ! --
+                  </Text>
+                </View>
+              </View>
+            </>
+          )}
         </Card>
       </View>
       <View style={styles.iconCardWrapper}>
@@ -127,5 +143,12 @@ const styles = StyleSheet.create({
     height: hp("10"),
     borderRadius: 15,
     marginHorizontal: wp("5%"),
+  },
+  emptyStateWrapper: {
+    alignItems: "center",
+  },
+  emptyText: {
+    fontWeight: "bold",
+    fontSize: hp("2.5%"),
   },
 });
