@@ -27,6 +27,11 @@ export const setGlobalTransaction = createAction(
   Actions.SET_GLOBAL_TRANSACTION
 );
 
+/**
+ * @desc Set Card Transaction
+ */
+export const setCardTransaction = createAction(Actions.SET_CARD_TRANSACTION);
+
 export const clearInData = () => (dispatch) => {
   //   dispatch(setCurrentUser(null));
 };

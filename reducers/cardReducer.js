@@ -33,10 +33,16 @@ const setCardListReducer = createReducerOrig(cardListIntialState, (builder) => {
   });
 });
 
+const selectedCardReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_SELECTED_CARD,
+});
+
 const cardReducer = combineReducers({
   addCard: addCardReducer,
   loading: cardLoaderReducer,
   cardList: setCardListReducer,
+  selectedCard: selectedCardReducer,
 });
 
 export default cardReducer;

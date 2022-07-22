@@ -25,6 +25,7 @@ import AlertMessage from "../../../Components/Alert/AlertMessage";
 import { isEmpty } from "../../../helper/commpn";
 import Loader from "../../../Components/Loader/Loader";
 import EmptyCardCollectionScreen from "./EmptyCardCollectionScreen";
+import { setSelectedCard } from "../../../actions/cardActions";
 
 export default function CardCollectionScreen({ navigation }) {
   const isFocused = useIsFocused();
@@ -56,9 +57,12 @@ export default function CardCollectionScreen({ navigation }) {
     navigation.navigate("AddCardScreen");
   };
 
-  const openCardTransactionListScreen = async () => {
-    await setModalVisible(false);
-    navigation.navigate("CardTransactionListScreen");
+  const openCardTransactionListScreen = async (item) => {
+    if (item) {
+      await setModalVisible(false);
+      dispatch(setSelectedCard(item));
+      navigation.navigate("CardTransactionListScreen");
+    }
   };
 
   const deleteCard = async (card) => {
@@ -81,7 +85,7 @@ export default function CardCollectionScreen({ navigation }) {
             { backgroundColor: colors[index % colors.length] },
           ]}
           onPress={() => {
-            openCardTransactionListScreen();
+            openCardTransactionListScreen(item);
           }}
         >
           <View style={{ flexDirection: "row" }}>
