@@ -2,7 +2,11 @@ import { clearErrorMessage, setErrorMessage } from "../actions/messageActions";
 import { getAPIErrorReason, isEmpty } from "../helper/commpn";
 import { VEDPAY_API } from "@env";
 import axios from "axios";
-import { setCardList, setCardLoader } from "../actions/cardActions";
+import {
+  setCardList,
+  setCardLoader,
+  setCardStats,
+} from "../actions/cardActions";
 
 /**
  * @desc Add Card
@@ -102,6 +106,38 @@ export const deleteCardService = (userId, cardId) => async (dispatch) => {
   } catch (e) {
     dispatchCardError(
       getAPIResponseError(e) || "Unable to delete card, please try again later",
+      dispatch
+    );
+    return false;
+  } finally {
+    dispatch(setCardLoader(false));
+  }
+};
+
+/**
+ * @desc Get Card Stats
+ */
+export const getCardStats = (userId) => async (dispatch) => {
+  try {
+    dispatch(clearErrorMessage(""));
+    if (!userId) return false;
+    dispatch(setCardLoader(true));
+
+    if (isEmpty(userId)) {
+      dispatchCardError("User is Required", dispatch);
+      return false;
+    }
+    const response = await axios.get(
+      `${VEDPAY_API}/api/card/${userId}/cardStats`
+    );
+
+    if (response?.data) {
+      dispatch(setCardStats(response?.data?.cardStats));
+      return true;
+    }
+  } catch (error) {
+    dispatchCardError(
+      getAPIErrorReason(error) || "Unable to fetch Card List, please try again",
       dispatch
     );
     return false;
