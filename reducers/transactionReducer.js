@@ -23,11 +23,17 @@ const globalTransactionReducer = createReducer({
   actionType: Actions.SET_GLOBAL_TRANSACTION,
 });
 
+const cardTransactionReducer = createReducer({
+  initialState: null,
+  actionType: Actions.SET_CARD_TRANSACTION,
+});
+
 const transactionReducer = combineReducers({
   loading: transactionLoaderReducer,
   transactionDetail: transactionDetailReducer,
   contactTransaction: contactTransactionReducer,
   globalTransaction: globalTransactionReducer,
+  cardTransaction: cardTransactionReducer,
 });
 
 export default transactionReducer;
