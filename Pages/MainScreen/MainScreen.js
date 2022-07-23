@@ -57,7 +57,7 @@ export default function MainScreen({ navigation }) {
     <View>
       <View style={styles.mainChartWrapper}>
         <Card style={styles.progressChartCard}>
-          {cardStats?.data?.length !== 0 ? (
+          {cardStats?.data ? (
             <ProgressChart
               style={styles.progesBar}
               data={cardStats}

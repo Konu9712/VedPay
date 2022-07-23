@@ -17,6 +17,7 @@ import OutContactChatScreen from "../Pages/Out/OutContactChatScreen/OutContactCh
 import OutPayScreen from "../Pages/Out/OutPayScreen/OutPayScreen";
 import HistoryMainScreen from "../Pages/MainScreen/History/HistoryMainScreen/HistoryMainScreen";
 import HistoryDetails from "../Pages/MainScreen/History/HistoryDetails/HistoryDetails";
+import SettingMainScreen from "../Pages/Setting/SettingMainScreen";
 
 const Stack = createStackNavigator();
 const d = Dimensions.get("window");
@@ -75,9 +76,9 @@ function Out() {
 
 function Settings() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings</Text>
-    </View>
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="SettingMainScreen" component={SettingMainScreen} />
+    </Stack.Navigator>
   );
 }
 
