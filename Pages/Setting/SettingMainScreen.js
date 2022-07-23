@@ -8,6 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { useDispatch, useSelector } from "react-redux";
+import { updateCurrentUser } from "../../actions/authActions";
 import AlertMessage from "../../Components/Alert/AlertMessage";
 import ModalConatiner from "../../Components/Modal/Modal";
 import { getData } from "../../services/localStorageService";
@@ -30,6 +31,14 @@ export default function SettingMainScreen({ navigation }) {
   const loadData = async () => {
     const userProfile = await dispatch(getData("userProfile"));
     setUser(userProfile);
+  };
+
+  const logout = () => {
+    const payload = {
+      phoneNumber: "",
+      password: "",
+    };
+    dispatch(updateCurrentUser(payload));
   };
 
   return (
@@ -56,7 +65,7 @@ export default function SettingMainScreen({ navigation }) {
                 <Button
                   mode="contained"
                   style={styles.logout_btn}
-                  onPress={() => openQr_ScannerScreen()}
+                  onPress={() => logout()}
                   color="red"
                 >
                   Log out
