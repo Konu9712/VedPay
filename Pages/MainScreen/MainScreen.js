@@ -11,6 +11,7 @@ import { getData } from "../../services/localStorageService";
 import { getVedpayUsers } from "../../services/authService";
 import { getCardStats } from "../../services/cardService";
 import EmptyState from "../../Components/Logo/EmptyState";
+import { isEmpty } from "../../helper/commpn";
 
 export default function MainScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -27,9 +28,7 @@ export default function MainScreen({ navigation }) {
 
   const loadVedpayUsers = async () => {
     const userProfile = await dispatch(getData("userProfile"));
-    const result = await dispatch(
-      getVedpayUsers(userProfile?.userId, allContacts)
-    );
+    const result = dispatch(getVedpayUsers(userProfile?.userId, allContacts));
     const cardStats = await dispatch(getCardStats(userProfile?.userId));
   };
 
@@ -57,7 +56,7 @@ export default function MainScreen({ navigation }) {
     <View>
       <View style={styles.mainChartWrapper}>
         <Card style={styles.progressChartCard}>
-          {cardStats?.data ? (
+          {!isEmpty(cardStats?.data) ? (
             <ProgressChart
               style={styles.progesBar}
               data={cardStats}
