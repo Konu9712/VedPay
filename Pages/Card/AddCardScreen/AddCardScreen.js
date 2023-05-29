@@ -10,7 +10,7 @@ import { Button, TextInput, TextInputMask } from "react-native-paper";
 import ModalConatiner from "../../../Components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { addCardAction } from "../../../actions/cardActions";
-import { CreditCardInput } from "react-native-credit-card-input-plus";
+// import { CreditCardInput } from "react-native-credit-card-input-plus";
 import { addCardService } from "../../../services/cardService";
 import Loader from "../../../Components/Loader/Loader";
 import AlertMessage from "../../../Components/Alert/AlertMessage";
@@ -92,7 +92,7 @@ export default function AddCardScreen({ navigation }) {
             <>
               <View style={styles.input_wrapper}>
                 <View style={styles.cardWrapper}>
-                  <CreditCardInput
+                  {/* <CreditCardInput
                     placeholders={{
                       number: "1234 5678 1234 5678",
                       expiry: "MM/YY",
@@ -117,7 +117,7 @@ export default function AddCardScreen({ navigation }) {
                     onChange={(form) => {
                       onChangeCardInput(form);
                     }}
-                  />
+                  /> */}
                 </View>
                 <View style={styles.buttonWrapper}>
                   <Button
