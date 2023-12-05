@@ -40,3 +40,9 @@ If you're interested in contributing to VedPay, please follow these guidelines:
 
 - [Konark Dave](https://github.com/Konu9712)
 
+##ScreenSot
+
+![Vedpay 1](https://github.com/Konu9712/VedPay/assets/51238256/b70ccc80-536a-4e90-839e-106714fc7f0a)
+
+
+![VedPay2](https://github.com/Konu9712/VedPay/assets/51238256/6f1fc4fc-5f65-4ede-8ee8-6784d0b56a3c)
