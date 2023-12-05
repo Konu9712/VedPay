@@ -42,7 +42,5 @@ If you're interested in contributing to VedPay, please follow these guidelines:
 
 ##ScreenSot
 
-![Vedpay 1](https://github.com/Konu9712/VedPay/assets/51238256/b70ccc80-536a-4e90-839e-106714fc7f0a)
+![Vedpay 1](https://github.com/Konu9712/VedPay/assets/51238256/213edc3c-249a-4e7f-97ae-a670674eee25)  ![VedPay2](https://github.com/Konu9712/VedPay/assets/51238256/5a54196d-98ae-4b48-a8f1-74c02b94f562)
 
-
-![VedPay2](https://github.com/Konu9712/VedPay/assets/51238256/6f1fc4fc-5f65-4ede-8ee8-6784d0b56a3c)
